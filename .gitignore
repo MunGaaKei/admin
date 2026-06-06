@@ -1,0 +1,10 @@
+node_modules/
+.turbo/
+dist/
+
+# generated
+apps/api/src/generated/
+*.db
+*.db-journal
+.env
+.env.local

@@ -1,0 +1,127 @@
+.aside {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    border-right: 1px solid var(--color-9);
+}
+
+.collapsed {
+    align-items: center;
+    width: 60px;
+    gap: 12px;
+    .header {
+        flex-direction: column;
+    }
+    .menu {
+        width: 240px;
+        background: var(--background);
+        border: 1px solid var(--color-9);
+        border-radius: var(--radius);
+        transition: all 0.12s;
+
+        opacity: 0;
+        pointer-events: none;
+
+        &:hover {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+    :global(.i-tree) {
+        padding: 0 8px;
+        flex-shrink: 0;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    margin: 0;
+    display: flex;
+    width: 24px;
+    height: 24px;
+}
+
+.menuContainer {
+    flex: 1;
+    width: 100%;
+    position: relative;
+
+    &:hover {
+        .menu {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+}
+
+.menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: auto;
+
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 8px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    max-height: 100%;
+
+    &::before,
+    &::after {
+        content: "\20";
+        position: sticky;
+        height: 12px;
+        width: 100%;
+        flex-shrink: 0;
+        z-index: 11;
+        pointer-events: none;
+    }
+
+    &::before {
+        margin-bottom: -8px;
+        top: 0;
+        background: linear-gradient(to bottom, var(--background), transparent);
+    }
+
+    &::after {
+        margin-top: auto;
+        bottom: 0;
+        background: linear-gradient(to top, var(--background), transparent);
+    }
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
+
+.nickname {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -1,0 +1,14 @@
+{
+  "name": "admin",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build"
+  },
+  "packageManager": "pnpm@10.20.0",
+"devDependencies": {
+    "turbo": "^2.9.16",
+    "typescript": "^6.0.3"
+  }
+}
