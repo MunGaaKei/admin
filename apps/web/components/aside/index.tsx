@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { Cog, DoorOpen, MoreHorizontal, PanelLeft } from "lucide-react";
 import { memo, useState } from "react";
 import { navigate } from "vike/client/router";
-import { usePageContext } from "vike-react/usePageContext";
 import { menus } from "../../config/menu.js";
 import { request } from "../../src/api/client.js";
 import { useAuth } from "../../src/store/auth";
@@ -11,8 +10,7 @@ import { tryto } from "../../src/utils/index.js";
 import css from "./index.module.css";
 
 const Menu = memo(() => {
-    const pageContext = usePageContext();
-    const selected = pageContext.urlPathname.replace("/", "");
+    const [selected, setSelected] = useState("");
 
     return (
         <div className={css.menuContainer}>
