@@ -49,8 +49,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/shared
       '@ioca/react':
-        specifier: ^1.5.23
-        version: 1.5.23(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^1.5.24
+        version: 1.5.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@types/react':
         specifier: ^19.2.16
         version: 19.2.16
@@ -377,8 +377,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@ioca/react@1.5.23':
-    resolution: {integrity: sha512-XJVseA6ORX2MceMLzAh4Y/xEYa5qcMRom315c7/kknVxOhCljDSi3Lq8CLsrZHVGDhCBYYxCDqhMnG9qs0noYQ==}
+  '@ioca/react@1.5.24':
+    resolution: {integrity: sha512-8MQLRF7g37l5rqtu4R5JaOeLoJA9AWpp7SmMohLr8M0yrLQgyXmrlV95Gcj4+YPyeRXxJ5UBfI9vd1mg5gjWmg==}
     peerDependencies:
       react: ^19.0.0
       react-dom: ^19.0.0
@@ -1839,7 +1839,7 @@ snapshots:
     dependencies:
       hono: 4.12.23
 
-  '@ioca/react@1.5.23(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@ioca/react@1.5.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@rc-component/color-picker': 2.0.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@ricons/material': 0.12.0
