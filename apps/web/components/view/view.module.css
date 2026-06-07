@@ -4,9 +4,6 @@
     flex-direction: column;
     overflow: hidden;
 
-    :global(.i-resizable-line) {
-        background-color: var(--background-opacity-2);
-    }
     :global(.i-tab-navs-container) {
         border-radius: 0;
     }
@@ -38,10 +35,11 @@
 }
 
 .contextMenu {
+    min-width: 132px;
     font-size: 14px;
     box-shadow: var(--shadow);
     background-color: var(--background-opacity);
-    backdrop-filter: var(--blur);
+    backdrop-filter: blur(12px);
     border-radius: var(--radius);
     padding: 4px;
     animation: contextMenuIn 0.12s ease-out;

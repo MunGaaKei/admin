@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { request } from "../api/client.js";
-import type { ApiResponse, LoginParams } from "@admin/shared";
+import type { ApiResponse, LoginParams } from "../types.js";
 
 export interface User {
   id: number;

@@ -2,7 +2,8 @@ import type { PageContextServer } from "vike/types";
 import { redirect } from "vike/abort";
 import { useAuth } from "../src/store/auth";
 import { request } from "../src/api/client.js";
-import type { ApiResponse, UserInfo } from "@admin/shared";
+import type { ApiResponse } from "../src/types.js";
+import type { User } from "../src/store/auth.js";
 import { tryto } from "../src/utils/index.js";
 
 const whitelist = ["/login", "/"];
@@ -15,7 +16,7 @@ async function guard(pageContext: PageContextServer) {
 
   // Client side: verify with the API via cookie, then refresh store
   const { error, data } = await tryto(
-    request<ApiResponse<{ user: UserInfo }>>("auth/verify"),
+    request<ApiResponse<{ user: User }>>("auth/verify"),
   );
   if (error) {
     useAuth.getState().logout();

@@ -21,7 +21,7 @@ interface ViewState {
 }
 
 interface ViewActions {
-    addTab: (menuKey: string, options?: { split?: boolean }) => void;
+    openTab: (menuKey: string, options?: { split?: boolean }) => void;
     closeTab: (viewId: string, tabId: string) => void;
     setActiveTab: (viewId: string, tabId: string) => void;
     setActiveView: (viewId: string) => void;
@@ -37,7 +37,7 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
     views: [],
     activeViewId: null,
 
-    addTab: (menuKey, options = {}) => {
+    openTab: (menuKey, options = {}) => {
         const menuIndex = menus.findIndex((m) => m.key === menuKey);
         if (menuIndex === -1) return;
         const menu = menus[menuIndex];
@@ -62,22 +62,29 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
         const view = state2.views.find((v) => v.id === targetViewId)!;
         const existing = view.tabs.find((t) => t.id === menuKey);
         if (existing) {
-            get().closeTab(targetViewId, menuKey);
-            setTimeout(() => {
-                const s = get();
-                const v = s.views.find((v) => v.id === targetViewId);
-                const tab = { id: menuKey, title: menu.title, menuIndex, content: menu.content };
-                if (!v) {
-                    const id = nextId();
-                    set({ views: [...s.views, { id, tabs: [tab], activeTabId: menuKey }], activeViewId: id });
-                    return;
-                }
-                set({
-                    activeViewId: targetViewId,
-                    views: s.views.map((v) => (v.id === targetViewId ? { ...v, tabs: [...v.tabs, tab], activeTabId: menuKey } : v)),
-                });
-            }, 0);
+            set({
+                activeViewId: targetViewId,
+                views: state2.views.map((v) =>
+                    v.id === targetViewId ? { ...v, activeTabId: menuKey } : v
+                ),
+            });
             return;
+        }
+
+        // Switch to another view if it already has this tab
+        if (state2.views.length > 1) {
+            const otherView = state2.views.find(
+                (v) => v.id !== targetViewId && v.tabs.some((t) => t.id === menuKey)
+            );
+            if (otherView) {
+                set({
+                    activeViewId: otherView.id,
+                    views: state2.views.map((v) =>
+                        v.id === otherView.id ? { ...v, activeTabId: menuKey } : v
+                    ),
+                });
+                return;
+            }
         }
 
         const tab = { id: menuKey, title: menu.title, menuIndex, content: menu.content };

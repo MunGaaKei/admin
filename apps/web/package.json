@@ -8,8 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@admin/shared": "workspace:*",
-    "@ioca/react": "^1.5.26",
+    "@ioca/react": "^1.5.27",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",

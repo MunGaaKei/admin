@@ -12,8 +12,12 @@ import css from "./index.module.css";
 import { useViewStore } from "../../src/store/view.js";
 
 const Menu = memo(() => {
-    const [selected, setSelected] = useState("");
-    const addTab = useViewStore((s) => s.addTab);
+    const openTab = useViewStore((s) => s.openTab);
+    const selected = useViewStore((s) => {
+        if (!s.activeViewId) return "";
+        const view = s.views.find((v) => v.id === s.activeViewId);
+        return view?.activeTabId ?? "";
+    });
 
     return (
         <div className={css.menuContainer}>
@@ -24,8 +28,7 @@ const Menu = memo(() => {
                     style={{ width: "100%" }}
                     onItemClick={(item) => {
                         if (item.key) {
-                            setSelected(item.key);
-                            addTab(item.key);
+                            openTab(item.key);
                         }
                     }}
                 />

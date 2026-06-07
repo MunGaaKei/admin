@@ -1,4 +1,4 @@
-import type { LoginParams } from "@admin/shared";
+import type { LoginParams } from "../../src/types.js";
 import { Button, Form, Input, Message } from "@ioca/react";
 import { CircleUserRound, LockKeyhole } from "lucide-react";
 import { useState } from "react";

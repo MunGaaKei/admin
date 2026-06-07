@@ -7,14 +7,14 @@ import css from "./view.module.css";
 
 export function View() {
     const views = useViewStore((s) => s.views);
-    const addTab = useViewStore((s) => s.addTab);
+    const openTab = useViewStore((s) => s.openTab);
     const pageContext = usePageContext();
 
     // Route detection: open tab from URL query param
     const tabParam = pageContext.urlParsed?.search?.tab;
     useEffect(() => {
         if (tabParam && typeof tabParam === "string") {
-            addTab(tabParam);
+            openTab(tabParam);
         }
     }, [tabParam]);
 
