@@ -1,0 +1,48 @@
+.view {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    :global(.i-resizable-line) {
+        background-color: var(--background-opacity-2);
+    }
+    :global(.i-tab-navs-container) {
+        border-radius: 0;
+    }
+}
+
+.pane {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.pane :global(.i-tabs) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+@keyframes contextMenuIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contextMenu {
+    font-size: 14px;
+    box-shadow: var(--shadow);
+    background-color: var(--background-opacity);
+    backdrop-filter: var(--blur);
+    border-radius: var(--radius);
+    padding: 4px;
+    animation: contextMenuIn 0.12s ease-out;
+}

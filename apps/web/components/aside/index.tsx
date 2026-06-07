@@ -9,13 +9,26 @@ import { useAuth } from "../../src/store/auth";
 import { tryto } from "../../src/utils/index.js";
 import css from "./index.module.css";
 
+import { useViewStore } from "../../src/store/view.js";
+
 const Menu = memo(() => {
     const [selected, setSelected] = useState("");
+    const addTab = useViewStore((s) => s.addTab);
 
     return (
         <div className={css.menuContainer}>
             <menu className={css.menu}>
-                <Tree data={menus} selected={selected} style={{ width: "100%" }} />
+                <Tree
+                    data={menus}
+                    selected={selected}
+                    style={{ width: "100%" }}
+                    onItemClick={(item) => {
+                        if (item.key) {
+                            setSelected(item.key);
+                            addTab(item.key);
+                        }
+                    }}
+                />
             </menu>
         </div>
     );

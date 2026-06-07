@@ -8,3 +8,4 @@ apps/api/src/generated/
 *.db-journal
 .env
 .env.local
+.playwright-mcp
