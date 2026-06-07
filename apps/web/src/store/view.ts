@@ -1,10 +1,11 @@
-import type { ComponentType } from "react";
+import { type ComponentType } from "react";
 import { create } from "zustand";
+import type { MessageDescriptor } from "@lingui/core";
 import { menus } from "../../config/menu.js";
 
 export interface TabItem {
     id: string;
-    title: string;
+    title: string | MessageDescriptor;
     menuIndex: number;
     content: () => Promise<{ default: ComponentType<any> }>;
 }

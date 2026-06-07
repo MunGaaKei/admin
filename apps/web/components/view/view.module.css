@@ -16,11 +16,18 @@
     overflow: hidden;
 }
 
-.pane :global(.i-tabs) {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
+.pane {
+    :global(.i-tabs) {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        gap: 0;
+    }
+    :global(.i-tab-content) {
+        height: 100%;
+        overflow: auto;
+    }
 }
 
 @keyframes contextMenuIn {

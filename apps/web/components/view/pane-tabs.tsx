@@ -1,7 +1,13 @@
 import { Tabs } from "@ioca/react";
 import { useEffect, useState, type ComponentType } from "react";
+import { useLingui } from "@lingui/react";
+import type { MessageDescriptor } from "@lingui/core";
 import { useViewStore, type TabItem } from "../../src/store/view.js";
 import css from "./view.module.css";
+
+function resolveTitle(title: string | MessageDescriptor, _: (msg: MessageDescriptor) => string): string {
+    return typeof title === "string" ? title : _(title);
+}
 
 function DynamicContent({ load }: { load: () => Promise<{ default: ComponentType<any> }> }) {
     const [Component, setComponent] = useState<ComponentType<any> | null>(null);
@@ -20,6 +26,7 @@ function DynamicContent({ load }: { load: () => Promise<{ default: ComponentType
 
 export function PaneTabs({ viewId, tabs, activeTabId }: { viewId: string; tabs: TabItem[]; activeTabId?: string }) {
     const { setActiveTab, setActiveView, closeTab } = useViewStore();
+    const { _ } = useLingui();
 
     const handleTabChange = (to?: string) => {
         if (!to) return;
@@ -29,7 +36,7 @@ export function PaneTabs({ viewId, tabs, activeTabId }: { viewId: string; tabs: 
 
     const tabItems = tabs.map((t) => ({
         key: t.id,
-        title: t.title,
+        title: resolveTitle(t.title, _),
         content: <DynamicContent load={t.content} />,
         closable: true,
     }));
