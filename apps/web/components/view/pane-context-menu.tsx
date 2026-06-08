@@ -1,14 +1,11 @@
 import { List } from "@ioca/react";
 import { Columns2, SquareX } from "lucide-react";
-import { useLingui } from "@lingui/react";
-import { msg } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useViewStore } from "../../src/store/view.js";
 
-const closeOthersLabel = msg`关闭其他`;
-const splitScreenLabel = msg`分屏`;
 
 export function ContextMenuContent({ viewId, tabId, onClose }: { viewId: string; tabId: string; onClose: () => void }) {
-    const { _ } = useLingui();
+    const { t } = useLingui();
 
     const handleCloseOthers = () => {
         const v = useViewStore.getState().views.find((x) => x.id === viewId);
@@ -42,10 +39,10 @@ export function ContextMenuContent({ viewId, tabId, onClose }: { viewId: string;
     return (
         <List type="option">
             <List.Item onClick={handleCloseOthers}>
-                {_(closeOthersLabel)} <SquareX size={16} />
+                {t`关闭其他`} <SquareX size={16} />
             </List.Item>
             <List.Item onClick={handleSplitScreen}>
-                {_(splitScreenLabel)} <Columns2 size={16} />
+                {t`分屏`} <Columns2 size={16} />
             </List.Item>
         </List>
     );

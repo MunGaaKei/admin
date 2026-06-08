@@ -1,7 +1,8 @@
 import { defineConfig } from "@lingui/cli";
+import type { LinguiConfig } from "@lingui/conf";
 import { formatter } from "@lingui/format-po";
 
-export default defineConfig({
+const config: LinguiConfig = defineConfig({
   sourceLocale: "zh-CN",
   locales: ["zh-CN", "en-US"],
   catalogs: [
@@ -13,3 +14,5 @@ export default defineConfig({
   format: formatter({ lineNumbers: false }),
   compileNamespace: "es",
 });
+
+export default config;

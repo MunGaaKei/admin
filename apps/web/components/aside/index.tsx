@@ -1,21 +1,17 @@
 import { Button, Dropdown, Tree } from "@ioca/react";
+import { useLingui } from "@lingui/react";
+import { useLingui as useLinguiMacro } from "@lingui/react/macro";
 import clsx from "clsx";
 import { Cog, DoorOpen, MoreHorizontal, PanelLeft } from "lucide-react";
 import { memo } from "react";
 import { navigate } from "vike/client/router";
-import { useLingui } from "@lingui/react";
-import { msg } from "@lingui/core/macro";
 import { menus } from "../../config/menu.js";
 import { request } from "../../src/api/client.js";
 import { useAuth } from "../../src/store/auth";
 import { useSettingStore } from "../../src/store/setting";
+import { useViewStore } from "../../src/store/view.js";
 import { tryto } from "../../src/utils/index.js";
 import css from "./index.module.css";
-
-import { useViewStore } from "../../src/store/view.js";
-
-const footerSettings = msg`设置`;
-const footerLogout = msg`退出`;
 
 const Menu = memo(() => {
     const openTab = useViewStore((s) => s.openTab);
@@ -26,7 +22,11 @@ const Menu = memo(() => {
         return view?.activeTabId ?? "";
     });
 
-    const translatedMenus = menus.map((m) => ({
+    const user = useAuth((s) => s.user);
+    const permissions = user?.permissions ?? [];
+
+    const visibleMenus = menus.filter((m) => !m.auth || permissions.includes(m.auth));
+    const translatedMenus = visibleMenus.map((m) => ({
         ...m,
         title: _(m.title),
     }));
@@ -54,7 +54,7 @@ export function Aside() {
     const toggleSidebar = useSettingStore((s) => s.toggleSidebar);
     const user = useAuth((s) => s.user);
     const logout = useAuth((s) => s.logout);
-    const { _ } = useLingui();
+    const { t } = useLinguiMacro();
 
     async function handleLogout() {
         await tryto(request("auth/logout", { method: "post" }));
@@ -79,21 +79,19 @@ export function Aside() {
 
                 <Dropdown
                     width={120}
-                    content={(close) => {
-                        return (
-                            <>
-                                <Dropdown.Item type="option">
-                                    <span>{_(footerSettings)}</span>
-                                    <Cog size={16} />
-                                </Dropdown.Item>
+                    content={
+                        <>
+                            <Dropdown.Item type="option" onClick={() => useViewStore.getState().openTab("setting")}>
+                                <span>{t`设置`}</span>
+                                <Cog size={16} />
+                            </Dropdown.Item>
 
-                                <Dropdown.Item type="option" className="error" onClick={handleLogout}>
-                                    <span>{_(footerLogout)}</span>
-                                    <DoorOpen size={16} />
-                                </Dropdown.Item>
-                            </>
-                        );
-                    }}
+                            <Dropdown.Item type="option" className="error" onClick={handleLogout}>
+                                <span>{t`退出`}</span>
+                                <DoorOpen size={16} />
+                            </Dropdown.Item>
+                        </>
+                    }
                 >
                     <Button flat square className="ml-auto">
                         <MoreHorizontal size={20} />

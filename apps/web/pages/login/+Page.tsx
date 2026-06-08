@@ -1,15 +1,17 @@
-import type { LoginParams } from "../../src/types.js";
 import { Button, Form, Input, Message } from "@ioca/react";
+import { useLingui } from "@lingui/react/macro";
 import { CircleUserRound, LockKeyhole } from "lucide-react";
 import { useState } from "react";
 import { navigate } from "vike/client/router";
 import { useAuth } from "../../src/store/auth";
+import type { LoginParams } from "../../src/types.js";
 import { tryto } from "../../src/utils/index.js";
 
 export default function Page() {
     const form = Form.useForm();
     const login = useAuth((s) => s.login);
     const [loading, setLoading] = useState(false);
+    const { t } = useLingui();
 
     const handleLogin = async () => {
         const data = await form.validate();
@@ -49,7 +51,7 @@ export default function Page() {
             </Form.Field>
 
             <Button onClick={handleLogin} loading={loading}>
-                Login
+                {t`登陆`}
             </Button>
         </Form>
     );
