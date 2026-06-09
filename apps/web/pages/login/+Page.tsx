@@ -6,6 +6,7 @@ import { navigate } from "vike/client/router";
 import { useAuth } from "../../src/store/auth";
 import type { LoginParams } from "../../src/types.js";
 import { tryto } from "../../src/utils/index.js";
+import css from "./index.module.css";
 
 export default function Page() {
     const form = Form.useForm();
@@ -39,7 +40,7 @@ export default function Page() {
                 password: true,
             }}
             width={280}
-            initialValues={{ username: "", password: "" }}
+            className={css.form}
             onEnter={handleLogin}
         >
             <Form.Field name="username">

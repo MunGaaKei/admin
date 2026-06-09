@@ -4,7 +4,6 @@ import { hashPassword } from "../src/utils/password.js";
 async function main() {
     const permissions = await Promise.all(
         [
-            { code: "role:edit", description: "编辑角色权限" },
             { code: "*", description: "拥有所有权限" },
             { code: "admin", description: "访问管理后台" },
         ].map((p) =>
@@ -36,12 +35,11 @@ async function main() {
         },
     });
 
-    // assign * permission to admin role
+    // admin role only gets * permission
+    await prisma.rolePermission.deleteMany({ where: { roleId: adminRole.id } });
     const starPermission = permissions.find((p) => p.code === "*")!;
-    await prisma.rolePermission.upsert({
-        where: { roleId_permissionId: { roleId: adminRole.id, permissionId: starPermission.id } },
-        update: {},
-        create: { roleId: adminRole.id, permissionId: starPermission.id },
+    await prisma.rolePermission.create({
+        data: { roleId: adminRole.id, permissionId: starPermission.id },
     });
 
     const admin = await prisma.user.upsert({

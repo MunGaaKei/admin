@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="absolute inset-0 flex">
             <Aside mode="admin" />
 
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 flex flex-column overflow-auto">{children}</main>
         </div>
     );
 }

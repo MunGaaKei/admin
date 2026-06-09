@@ -14,9 +14,21 @@ async function guard(pageContext: PageContextServer) {
   const pathname = new URL(pageContext.urlOriginal, "http://localhost").pathname;
   if (whitelist.includes(pathname)) return;
 
-  // Client side: verify with the API via cookie, then refresh store
+  // Server-side: ky/fetch with relative URLs doesn't work in Node.js.
+  // Just check cookie existence — client will do full verification on hydration.
+  if (pageContext.headers) {
+    if (!pageContext.headers.cookie?.includes("token=")) {
+      throw redirect("/login");
+    }
+    return;
+  }
+
+  // Client side: verify with the API via cookie (or stored token as fallback), then refresh store
+  const storedToken = useAuth.getState().token;
   const { error, data } = await tryto(
-    request<ApiResponse<{ user: User }>>("auth/verify"),
+    request<ApiResponse<{ user: User }>>("auth/verify", {
+      ...(storedToken ? { headers: { Authorization: `Bearer ${storedToken}` } } : {}),
+    }),
   );
   if (error) {
     useAuth.getState().logout();
