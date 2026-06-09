@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { Resizable } from "@ioca/react";
+import { useEffect } from "react";
 import { usePageContext } from "vike-react/usePageContext";
 import { useViewStore } from "../../src/store/view.js";
 import { ViewPane } from "./pane.js";
@@ -11,7 +11,6 @@ export function View() {
     const openTab = useViewStore((s) => s.openTab);
     const pageContext = usePageContext();
 
-    // Route detection: open tab from URL query param
     const tabParam = pageContext.urlParsed?.search?.tab;
     useEffect(() => {
         if (tabParam && typeof tabParam === "string") {
@@ -19,7 +18,6 @@ export function View() {
         }
     }, [tabParam]);
 
-    // Sync active tab to URL
     useEffect(() => {
         const activeView = views.find((v) => v.id === activeViewId);
         const tabId = activeView?.activeTabId;
@@ -46,13 +44,7 @@ export function View() {
 
     return (
         <div className={css.view}>
-            <Resizable
-                height="100%"
-                other={<ViewPane viewId={views[0].id} />}
-                size="50%"
-                minSize="20%"
-                maxSize="80%"
-            >
+            <Resizable height="100%" other={<ViewPane viewId={views[0].id} />} size="50%" minSize="20%" maxSize="80%">
                 <ViewPane viewId={views[1].id} />
             </Resizable>
         </div>

@@ -13,3 +13,14 @@ export const menus = [
         auth: "user:edit",
     },
 ];
+
+export const adminMenus = [
+    {
+        key: "/roles",
+        title: msg`角色管理`,
+    },
+    {
+        key: "/permissions",
+        title: msg`权限码管理`,
+    },
+];

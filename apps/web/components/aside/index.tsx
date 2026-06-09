@@ -1,11 +1,13 @@
 import { Button, Dropdown, Tree } from "@ioca/react";
 import { useLingui } from "@lingui/react";
 import { useLingui as useLinguiMacro } from "@lingui/react/macro";
+import { hasPermission } from "@web/auth/permissions.js";
 import clsx from "clsx";
-import { Cog, DoorOpen, MoreHorizontal, PanelLeft } from "lucide-react";
+import { Cog, DoorOpen, Monitor, MonitorCog, MoreHorizontal, PanelLeft } from "lucide-react";
 import { memo } from "react";
 import { navigate } from "vike/client/router";
-import { menus } from "../../config/menu.js";
+import { usePageContext } from "vike-react/usePageContext";
+import { menus, adminMenus } from "../../config/menu.js";
 import { request } from "../../src/api/client.js";
 import { useAuth } from "../../src/store/auth";
 import { useSettingStore } from "../../src/store/setting";
@@ -49,12 +51,40 @@ const Menu = memo(() => {
     );
 });
 
-export function Aside() {
+const AdminMenu = memo(() => {
+    const { _ } = useLingui();
+    const { urlPathname } = usePageContext();
+    const selected = urlPathname.startsWith("/admin") ? urlPathname.replace("/admin", "") || "/" : "";
+
+    const items = adminMenus.map((m) => ({
+        key: m.key,
+        title: _(m.title),
+        as: "a" as const,
+        href: `/admin${m.key}`,
+    }));
+
+    return (
+        <div className={css.menuContainer}>
+            <menu className={css.menu}>
+                <Tree data={items} selected={selected} style={{ width: "100%" }} />
+            </menu>
+        </div>
+    );
+});
+
+interface AsideProps {
+    mode?: "main" | "admin";
+}
+
+export function Aside({ mode = "main" }: AsideProps) {
     const sidebarCollapsed = useSettingStore((s) => s.sidebarCollapsed);
     const toggleSidebar = useSettingStore((s) => s.toggleSidebar);
     const user = useAuth((s) => s.user);
     const logout = useAuth((s) => s.logout);
     const { t } = useLinguiMacro();
+    const openTab = useViewStore((s) => s.openTab);
+
+    const isAdmin = mode === "admin";
 
     async function handleLogout() {
         await tryto(request("auth/logout", { method: "post" }));
@@ -72,19 +102,27 @@ export function Aside() {
                 </Button>
             </header>
 
-            <Menu />
+            {isAdmin ? <AdminMenu /> : <Menu />}
 
             <footer className={css.footer}>
                 {!sidebarCollapsed && <a className={css.nickname}>{user?.nickname}</a>}
+
+                {hasPermission("admin") && (
+                    <Button flat square href={isAdmin ? "/" : "/admin"}>
+                        {isAdmin ? <Monitor size={20} /> : <MonitorCog size={20} />}
+                    </Button>
+                )}
 
                 <Dropdown
                     width={120}
                     content={
                         <>
-                            <Dropdown.Item type="option" onClick={() => useViewStore.getState().openTab("setting")}>
-                                <span>{t`设置`}</span>
-                                <Cog size={16} />
-                            </Dropdown.Item>
+                            {!isAdmin && (
+                                <Dropdown.Item type="option" onClick={() => openTab("setting")}>
+                                    <span>{t`设置`}</span>
+                                    <Cog size={16} />
+                                </Dropdown.Item>
+                            )}
 
                             <Dropdown.Item type="option" className="error" onClick={handleLogout}>
                                 <span>{t`退出`}</span>
@@ -93,7 +131,7 @@ export function Aside() {
                         </>
                     }
                 >
-                    <Button flat square className="ml-auto">
+                    <Button flat square>
                         <MoreHorizontal size={20} />
                     </Button>
                 </Dropdown>

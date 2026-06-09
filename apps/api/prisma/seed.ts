@@ -4,9 +4,9 @@ import { hashPassword } from "../src/utils/password.js";
 async function main() {
     const permissions = await Promise.all(
         [
-            { code: "user:edit", description: "编辑用户" },
-            { code: "user:delete", description: "删除用户" },
             { code: "role:edit", description: "编辑角色权限" },
+            { code: "*", description: "拥有所有权限" },
+            { code: "admin", description: "访问管理后台" },
         ].map((p) =>
             prisma.permission.upsert({
                 where: { code: p.code },
@@ -36,14 +36,13 @@ async function main() {
         },
     });
 
-    // assign all permissions to admin role
-    for (const p of permissions) {
-        await prisma.rolePermission.upsert({
-            where: { roleId_permissionId: { roleId: adminRole.id, permissionId: p.id } },
-            update: {},
-            create: { roleId: adminRole.id, permissionId: p.id },
-        });
-    }
+    // assign * permission to admin role
+    const starPermission = permissions.find((p) => p.code === "*")!;
+    await prisma.rolePermission.upsert({
+        where: { roleId_permissionId: { roleId: adminRole.id, permissionId: starPermission.id } },
+        update: {},
+        create: { roleId: adminRole.id, permissionId: starPermission.id },
+    });
 
     const admin = await prisma.user.upsert({
         where: { username: "admin" },
@@ -62,7 +61,23 @@ async function main() {
         create: { userId: admin.id, roleId: adminRole.id },
     });
 
-    console.log("Seed done: admin/admin (admin role, all permissions)");
+    const iann = await prisma.user.upsert({
+        where: { username: "iann" },
+        update: { nickname: "Iann" },
+        create: {
+            username: "iann",
+            nickname: "Iann",
+            password: hashPassword("iann"),
+        },
+    });
+
+    await prisma.userRole.upsert({
+        where: { userId_roleId: { userId: iann.id, roleId: adminRole.id } },
+        update: {},
+        create: { userId: iann.id, roleId: adminRole.id },
+    });
+
+    console.log("Seed done: admin/admin, iann/iann (admin role, * permission)");
 }
 
 main()

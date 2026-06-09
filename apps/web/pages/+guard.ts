@@ -25,4 +25,12 @@ async function guard(pageContext: PageContextServer) {
 
   // Refresh user info in persisted store
   useAuth.setState({ user: data.data.user as any });
+
+  // Check admin permission for /admin routes
+  if (pathname.startsWith("/admin")) {
+    const permissions = data.data.user.permissions;
+    if (!permissions.includes("admin") && !permissions.includes("*")) {
+      throw redirect("/");
+    }
+  }
 }

@@ -11,7 +11,8 @@
     align-items: center;
     width: 60px;
     gap: 12px;
-    .header {
+    .header,
+    .footer {
         flex-direction: column;
     }
     .menu {
@@ -111,7 +112,7 @@
 .footer {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 4px;
 }
 
 .avatar {
@@ -126,6 +127,7 @@
 }
 
 .nickname {
+    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
