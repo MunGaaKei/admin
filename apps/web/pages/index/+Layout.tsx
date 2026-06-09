@@ -9,6 +9,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
             <main className="flex-1">
                 <View />
+
                 {children}
             </main>
         </div>

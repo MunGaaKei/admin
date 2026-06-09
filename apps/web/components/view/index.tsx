@@ -7,6 +7,7 @@ import css from "./view.module.css";
 
 export function View() {
     const views = useViewStore((s) => s.views);
+    const activeViewId = useViewStore((s) => s.activeViewId);
     const openTab = useViewStore((s) => s.openTab);
     const pageContext = usePageContext();
 
@@ -17,6 +18,19 @@ export function View() {
             openTab(tabParam);
         }
     }, [tabParam]);
+
+    // Sync active tab to URL
+    useEffect(() => {
+        const activeView = views.find((v) => v.id === activeViewId);
+        const tabId = activeView?.activeTabId;
+        const url = new URL(window.location.href);
+        if (tabId) {
+            url.searchParams.set("tab", tabId);
+        } else {
+            url.searchParams.delete("tab");
+        }
+        window.history.replaceState(null, "", url.pathname + url.search);
+    }, [views, activeViewId]);
 
     if (views.length === 0) {
         return <div className={css.view} />;
