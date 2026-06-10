@@ -16,11 +16,11 @@ export const menus = [
 
 export const adminMenus = [
     {
-        key: "/roles",
-        title: msg`角色管理`,
+        key: "/user",
+        title: msg`用户管理`,
     },
     {
-        key: "/permissions",
-        title: msg`权限码管理`,
+        key: "/roles",
+        title: msg`角色管理`,
     },
 ];

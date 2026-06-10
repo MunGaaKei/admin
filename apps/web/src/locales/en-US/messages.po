@@ -13,9 +13,21 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: pages/admin/user/+Page.tsx
+msgid "ID"
+msgstr "ID"
+
 #: config/menu.tsx
 msgid "个人资料"
 msgstr "Profile"
+
+#: tabs/setting/index.tsx
+msgid "主题"
+msgstr "Theme"
+
+#: tabs/setting/index.tsx
+msgid "亮色"
+msgstr "Light"
 
 #: components/view/pane-context-menu.tsx
 msgid "关闭其他"
@@ -25,10 +37,146 @@ msgstr "Close Others"
 msgid "分屏"
 msgstr "Split Screen"
 
+#: pages/admin/roles/components/role-form-modal.tsx
+msgid "创建成功"
+msgstr "Created Successfully"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "创建权限失败"
+msgstr "Failed to Create Permission"
+
+#: pages/admin/roles/components/role-table.tsx
+msgid "删除"
+msgstr "Delete"
+
+#: pages/admin/roles/components/role-table.tsx
+msgid "删除成功"
+msgstr "Deleted Successfully"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "可用权限"
+msgstr "Available Permissions"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "当前角色权限"
+msgstr "Current Role Permissions"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "描述"
+msgstr "Description"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "搜索"
+msgstr "Search"
+
+#: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/+Page.tsx
+msgid "操作"
+msgstr "Actions"
+
+#: pages/admin/user/+Page.tsx
+msgid "昵称"
+msgstr "Nickname"
+
+#: pages/admin/user/+Page.tsx
+msgid "暂无角色"
+msgstr "No Roles"
+
+#: tabs/setting/index.tsx
+msgid "暗色"
+msgstr "Dark"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/user/+Page.tsx
+msgid "更新成功"
+msgstr "Updated Successfully"
+
+#: pages/admin/roles/components/permission-field.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "权限"
+msgstr "Permissions"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "权限列表"
+msgstr "Permission List"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "权限管理"
+msgstr "Permission Management"
+
+#: pages/admin/roles/+Page.tsx
+msgid "添加"
+msgstr "Add"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+msgid "添加角色"
+msgstr "Add Role"
+
+#: pages/admin/user/+Page.tsx
+msgid "用户名"
+msgstr "Username"
+
+#: config/menu.tsx
+#: pages/admin/user/+Page.tsx
+msgid "用户管理"
+msgstr "User Management"
+
+#: pages/login/+Page.tsx
+msgid "登陆"
+msgstr "Login"
+
+#: pages/admin/roles/components/role-table.tsx
+msgid "确定要删除该角色吗？"
+msgstr "Are you sure you want to delete this role?"
+
+#: pages/admin/roles/components/role-table.tsx
+msgid "确认删除"
+msgstr "Confirm Delete"
+
+#: pages/admin/user/+Page.tsx
+msgid "管理"
+msgstr "Manage"
+
+#: pages/admin/roles/components/role-table.tsx
+msgid "编辑"
+msgstr "Edit"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+msgid "编辑角色"
+msgstr "Edit Role"
+
+#: tabs/setting/index.tsx
+msgid "自动"
+msgstr "Auto"
+
+#: pages/admin/user/+Page.tsx
+msgid "角色"
+msgstr "Role"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "角色代码"
+msgstr "Role Code"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "角色名称"
+msgstr "Role Name"
+
+#: config/menu.tsx
+#: pages/admin/roles/+Page.tsx
+msgid "角色管理"
+msgstr "Role Management"
+
 #: components/aside/index.tsx
 #: config/menu.tsx
 msgid "设置"
 msgstr "Settings"
+
+#: tabs/setting/index.tsx
+msgid "语言"
+msgstr "Language"
 
 #: components/aside/index.tsx
 msgid "退出"

@@ -1,8 +1,9 @@
-import { Form, Input, Message, Modal, Select } from "@ioca/react";
+import { Form, Input, Message, Modal } from "@ioca/react";
 import { useLingui } from "@lingui/react/macro";
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { request } from "../../../../src/api/client.js";
-import { tryto } from "../../../../src/utils/index.js";
+import { request } from "@web/api/client.js";
+import { tryto } from "@web/utils/index.js";
+import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from "react";
+import PermissionField, { type PermissionFieldHandle } from "./permission-field.js";
 
 interface Permission {
     id: number;
@@ -25,6 +26,7 @@ const RoleFormModal = forwardRef<RoleFormModalHandle, RoleFormModalProps>(({ per
     const [visible, setVisible] = useState(false);
     const [editingId, setEditingId] = useState<number | null>(null);
     const form = Form.useForm();
+    const permissionFieldRef = useRef<PermissionFieldHandle>(null);
 
     useImperativeHandle(
         ref,
@@ -36,15 +38,21 @@ const RoleFormModal = forwardRef<RoleFormModalHandle, RoleFormModalProps>(({ per
             },
             openEdit(_id, data) {
                 setEditingId(_id);
-                form.set(data);
+                const codes = data.permissionIds.map((id) => permissions.find((p) => p.id === id)?.code).filter((c): c is string => !!c);
+                form.set({ name: data.name, code: data.code, description: data.description, permissionCodes: codes });
                 setVisible(true);
             },
         }),
-        [form],
+        [form, permissions],
     );
 
     const handleSubmit = useCallback(async () => {
         const values = form.get();
+        const codes: string[] = values.permissionCodes ?? [];
+        const mapping = permissionFieldRef.current?.getMapping() ?? {};
+        values.permissionIds = codes.map((code: string) => mapping[code]).filter(Boolean);
+        delete values.permissionCodes;
+
         const { error } = editingId !== null ? await tryto(request(`roles/${editingId}`, { method: "put", json: values })) : await tryto(request("roles", { method: "post", json: values }));
 
         if (error) {
@@ -58,7 +66,7 @@ const RoleFormModal = forwardRef<RoleFormModalHandle, RoleFormModalProps>(({ per
     }, [editingId, form, onSuccess, t]);
 
     return (
-        <Modal visible={visible} onVisibleChange={setVisible} title={editingId !== null ? t`编辑角色` : t`添加角色`} width={520} onOk={handleSubmit}>
+        <Modal visible={visible} backdropClosable={false} onVisibleChange={setVisible} title={editingId !== null ? t`编辑角色` : t`添加角色`} width={520} onOk={handleSubmit}>
             <Form form={form} labelWidth="6em" labelInline labelRight className="px-12">
                 <Form.Field name="name" required>
                     <Input label={t`角色名称`} />
@@ -72,8 +80,8 @@ const RoleFormModal = forwardRef<RoleFormModalHandle, RoleFormModalProps>(({ per
                     <Input.Textarea label={t`描述`} autoSize />
                 </Form.Field>
 
-                <Form.Field name="permissionIds">
-                    <Select label={t`权限`} multiple options={permissions.map((p) => ({ label: p.code, value: p.id }))} />
+                <Form.Field name="permissionCodes">
+                    <PermissionField ref={permissionFieldRef} />
                 </Form.Field>
             </Form>
         </Modal>

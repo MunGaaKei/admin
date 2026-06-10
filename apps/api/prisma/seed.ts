@@ -6,6 +6,7 @@ async function main() {
         [
             { code: "*", description: "拥有所有权限" },
             { code: "admin", description: "访问管理后台" },
+            { code: "role:edit", description: "编辑角色" },
         ].map((p) =>
             prisma.permission.upsert({
                 where: { code: p.code },

@@ -5,9 +5,9 @@ import { hasPermission } from "@web/auth/permissions.js";
 import clsx from "clsx";
 import { Cog, DoorOpen, Monitor, MonitorCog, MoreHorizontal, PanelLeft } from "lucide-react";
 import { memo } from "react";
-import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-react/usePageContext";
-import { menus, adminMenus } from "../../config/menu.js";
+import { navigate } from "vike/client/router";
+import { adminMenus, menus } from "../../config/menu.js";
 import { request } from "../../src/api/client.js";
 import { useAuth } from "../../src/store/auth";
 import { useSettingStore } from "../../src/store/setting";
@@ -95,7 +95,9 @@ export function Aside({ mode = "main" }: AsideProps) {
     return (
         <aside className={clsx(css.aside, { [css.collapsed]: sidebarCollapsed })}>
             <header className={css.header}>
-                <img src="/logo.png" className={css.logo} />
+                <a href="/">
+                    <img src="/logo.png" className={css.logo} />
+                </a>
 
                 <Button flat square className="ml-auto" onClick={toggleSidebar}>
                     <PanelLeft size={20} />
@@ -107,8 +109,8 @@ export function Aside({ mode = "main" }: AsideProps) {
             <footer className={css.footer}>
                 {!sidebarCollapsed && <a className={css.nickname}>{user?.nickname}</a>}
 
-                {hasPermission("admin") && (
-                    <Button flat square href={isAdmin ? "/" : "/admin"}>
+                {hasPermission("admin") && !isAdmin && (
+                    <Button flat square href="/admin">
                         {isAdmin ? <Monitor size={20} /> : <MonitorCog size={20} />}
                     </Button>
                 )}

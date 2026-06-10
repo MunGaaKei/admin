@@ -8,7 +8,7 @@ const config: LinguiConfig = defineConfig({
   catalogs: [
     {
       path: "<rootDir>/src/locales/{locale}/messages",
-      include: ["src", "components", "config"],
+      include: ["src", "components", "config", "tabs", "pages"],
     },
   ],
   format: formatter({ lineNumbers: false }),

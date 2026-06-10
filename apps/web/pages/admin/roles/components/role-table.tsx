@@ -1,8 +1,8 @@
 import { Button, Datagrid, Message, Modal, Tag } from "@ioca/react";
 import { useLingui } from "@lingui/react/macro";
+import { request } from "@web/api/client.js";
+import { tryto } from "@web/utils/index.js";
 import { useCallback, useMemo, useState } from "react";
-import { request } from "../../../../src/api/client.js";
-import { tryto } from "../../../../src/utils/index.js";
 import type { Role } from "../types.js";
 
 interface RoleTableProps {
@@ -31,7 +31,7 @@ export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
         () => [
             { id: "name", title: t`角色名称` },
             { id: "code", title: t`角色代码` },
-            { id: "description", title: t`描述` },
+            { id: "description", title: t`描述`, width: 240 },
             {
                 id: "permissionCodes",
                 title: t`权限`,
@@ -46,6 +46,7 @@ export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
             {
                 id: "actions",
                 title: t`操作`,
+                width: 120,
                 render: (_: any, data: any) => {
                     const role = data as Role;
                     return (
@@ -65,7 +66,7 @@ export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
             <Datagrid data={roles} columns={columns as any} className="flex-1 mg-12" rowKey="id" border resizable />
 
             <Modal visible={!!deleteTarget} onVisibleChange={(v) => !v && setDeleteTarget(null)} title={t`确认删除`} onOk={handleDelete}>
-                <span>{t`确定要删除该角色吗？`}</span>
+                <div className="px-12">{t`确定要删除该角色吗？`}</div>
             </Modal>
         </>
     );

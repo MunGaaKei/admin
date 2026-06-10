@@ -4,9 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { request } from "../../../src/api/client.js";
 import type { ApiResponse } from "../../../src/types.js";
 import { tryto } from "../../../src/utils/index.js";
-import RoleTable from "./components/role-table.js";
-import RoleFormModal from "./components/role-form-modal.js";
 import type { RoleFormModalHandle } from "./components/role-form-modal.js";
+import RoleFormModal from "./components/role-form-modal.js";
+import RoleTable from "./components/role-table.js";
 import type { Role } from "./types.js";
 
 interface Permission {
@@ -36,21 +36,18 @@ export default function RolesPage() {
         loadPermissions();
     }, [loadRoles, loadPermissions]);
 
-    const handleEdit = useCallback(
-        (role: Role) => {
-            formModalRef.current?.openEdit(role.id, {
-                name: role.name,
-                code: role.code,
-                description: role.description,
-                permissionIds: role.permissionIds,
-            });
-        },
-        [],
-    );
+    const handleEdit = useCallback((role: Role) => {
+        formModalRef.current?.openEdit(role.id, {
+            name: role.name,
+            code: role.code,
+            description: role.description,
+            permissionIds: role.permissionIds,
+        });
+    }, []);
 
     return (
         <>
-            <header className="flex items-center pd-12">
+            <header className="flex pd-12">
                 <h3>{t`角色管理`}</h3>
 
                 <Button className="ml-auto" onClick={() => formModalRef.current?.openAdd()}>{t`添加`}</Button>

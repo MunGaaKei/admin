@@ -10,7 +10,7 @@
     "compile": "lingui compile --typescript"
   },
   "dependencies": {
-    "@ioca/react": "^1.5.27",
+    "@ioca/react": "^1.5.29",
     "@lingui/core": "^6.2.0",
     "@lingui/react": "^6.2.0",
     "@types/react": "^19.2.16",
