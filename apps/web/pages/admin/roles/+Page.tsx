@@ -1,4 +1,4 @@
-import { Button } from "@ioca/react";
+import { Button, Flex } from "@ioca/react";
 import { useLingui } from "@lingui/react/macro";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { request } from "../../../src/api/client.js";
@@ -46,8 +46,8 @@ export default function RolesPage() {
     }, []);
 
     return (
-        <>
-            <header className="flex pd-12">
+        <Flex className="flex-1 flex-column gap-12 pd-12">
+            <header className="flex">
                 <h3>{t`角色管理`}</h3>
 
                 <Button className="ml-auto" onClick={() => formModalRef.current?.openAdd()}>{t`添加`}</Button>
@@ -56,6 +56,6 @@ export default function RolesPage() {
             <RoleTable roles={roles} onEdit={handleEdit} onDelete={loadRoles} />
 
             <RoleFormModal ref={formModalRef} permissions={permissions} onSuccess={loadRoles} />
-        </>
+        </Flex>
     );
 }

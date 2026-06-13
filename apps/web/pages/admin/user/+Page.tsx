@@ -1,30 +1,19 @@
-import { Button, Checkbox, Datagrid, Form, Input, Message, Modal, Tag } from "@ioca/react";
+import { Button, Flex } from "@ioca/react";
 import { useLingui } from "@lingui/react/macro";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { request } from "../../../src/api/client.js";
 import type { ApiResponse } from "../../../src/types.js";
 import { tryto } from "../../../src/utils/index.js";
-
-interface Role {
-    id: number;
-    name: string;
-    code: string;
-}
-
-interface User {
-    id: number;
-    username: string;
-    nickname: string;
-    roles: Role[];
-}
+import type { UserFormModalHandle } from "./components/user-form-modal.js";
+import UserFormModal from "./components/user-form-modal.js";
+import UserTable from "./components/user-table.js";
+import type { User, Role } from "./types.js";
 
 export default function PermissionsPage() {
     const { t } = useLingui();
     const [users, setUsers] = useState<User[]>([]);
     const [roles, setRoles] = useState<Role[]>([]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [editingUser, setEditingUser] = useState<User | null>(null);
-    const form = Form.useForm();
+    const formModalRef = useRef<UserFormModalHandle>(null);
 
     const loadUsers = useCallback(async () => {
         const { data } = await tryto(request<ApiResponse<User[]>>("users"));
@@ -41,98 +30,24 @@ export default function PermissionsPage() {
         loadRoles();
     }, [loadUsers, loadRoles]);
 
-    const handleEdit = useCallback(
-        (user: User) => {
-            setEditingUser(user);
-            form.set({ nickname: user.nickname, roleCodes: user.roles.map((r) => r.code) });
-            setModalVisible(true);
-        },
-        [form],
-    );
-
-    const handleSave = useCallback(async () => {
-        if (!editingUser) return false;
-
-        const values = form.get();
-        const { error } = await tryto(
-            request(`users/${editingUser.id}`, {
-                method: "put",
-                json: { nickname: values.nickname, roleCodes: values.roleCodes },
-            }),
-        );
-
-        if (error) {
-            Message.error(error.message);
-            return false;
-        }
-
-        Message.success(t`更新成功`);
-        setModalVisible(false);
-        loadUsers();
-    }, [editingUser, form, loadUsers, t]);
-
-    const roleOptions = useMemo(() => roles.map((r) => ({ label: r.name, value: r.code })), [roles]);
-
-    const columns = useMemo(
-        () => [
-            { id: "id", title: t`ID`, width: 80 },
-            { id: "username", title: t`用户名` },
-            { id: "nickname", title: t`昵称` },
-            {
-                id: "roles",
-                title: t`角色`,
-                render: (value: Role[]) => (
-                    <div className="flex gap-4 flex-wrap">
-                        {value?.map((role) => (
-                            <Tag key={role.id}>{role.name}</Tag>
-                        ))}
-                    </div>
-                ),
-            },
-            {
-                id: "actions",
-                title: t`操作`,
-                width: 100,
-                render: (_: any, data: any) => {
-                    const user = data as User;
-                    return (
-                        <Button size="small" className="bg-blue" onClick={() => handleEdit(user)}>{t`管理`}</Button>
-                    );
-                },
-            },
-        ],
-        [t, handleEdit],
-    );
+    const handleEdit = useCallback((user: User) => {
+        formModalRef.current?.openEdit(user.id, {
+            nickname: user.nickname,
+            roleCodes: user.roles.map((r) => r.code),
+        });
+    }, []);
 
     return (
-        <>
-            <header className="flex pd-12">
+        <Flex className="flex-1 flex-column gap-12 pd-12">
+            <header className="flex">
                 <h3>{t`用户管理`}</h3>
+
+                <Button className="ml-auto" onClick={() => formModalRef.current?.openAdd()}>{t`添加`}</Button>
             </header>
 
-            <Datagrid data={users} columns={columns as any} className="flex-1 mg-12" rowKey="id" border resizable />
+            <UserTable users={users} onEdit={handleEdit} onDelete={loadUsers} />
 
-            <Modal
-                visible={modalVisible}
-                backdropClosable={false}
-                onVisibleChange={(v) => {
-                    setModalVisible(v);
-                    if (!v) setEditingUser(null);
-                }}
-                title={t`用户管理`}
-                width={520}
-                onOk={handleSave}
-            >
-                <Form form={form} labelWidth="6em" labelInline labelRight className="px-12">
-                    <Form.Field name="nickname">
-                        <Input label={t`昵称`} />
-                    </Form.Field>
-
-                    <Form.Field name="roleCodes">
-                        <Checkbox label={t`角色`} options={roleOptions} optionInline />
-                    </Form.Field>
-                </Form>
-            </Modal>
-        </>
+            <UserFormModal ref={formModalRef} roles={roles} onSuccess={loadUsers} />
+        </Flex>
     );
 }

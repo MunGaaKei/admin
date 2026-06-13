@@ -1,16 +1,18 @@
 import { msg } from "@lingui/core/macro";
+import { Gauge, Telescope } from "lucide-react";
 
 export const menus = [
     {
-        key: "setting",
-        title: msg`设置`,
-        content: () => import("../tabs/setting"),
+        key: "dashboard",
+        title: msg`仪表盘`,
+        icon: <Gauge size={20} />,
+        content: () => import("../tabs/dashboard"),
     },
     {
-        key: "profile",
-        title: msg`个人资料`,
-        content: () => import("../tabs/profile"),
-        auth: "user:edit",
+        key: "explore",
+        title: msg`探索`,
+        icon: <Telescope size={20} />,
+        content: () => import("../tabs/explore"),
     },
 ];
 

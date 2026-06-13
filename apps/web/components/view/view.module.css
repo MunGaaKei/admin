@@ -48,6 +48,16 @@
     background-color: var(--background-opacity);
     backdrop-filter: blur(12px);
     border-radius: var(--radius);
-    padding: 4px;
+    padding: 4px 0;
     animation: contextMenuIn 0.12s ease-out;
+    :global(.i-list-item) {
+        margin-inline: 4px;
+    }
+}
+
+.divider {
+    margin: 4px 0;
+    height: 1px;
+    flex-shrink: 0;
+    background-color: var(--background-opacity-1);
 }

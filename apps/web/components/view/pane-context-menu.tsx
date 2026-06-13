@@ -1,8 +1,8 @@
 import { List } from "@ioca/react";
-import { Columns2, SquareX } from "lucide-react";
 import { useLingui } from "@lingui/react/macro";
+import { Columns2, RotateCw, SquareX } from "lucide-react";
 import { useViewStore } from "../../src/store/view.js";
-
+import css from "./view.module.css";
 
 export function ContextMenuContent({ viewId, tabId, onClose }: { viewId: string; tabId: string; onClose: () => void }) {
     const { t } = useLingui();
@@ -12,6 +12,11 @@ export function ContextMenuContent({ viewId, tabId, onClose }: { viewId: string;
         if (!v) return;
         const { closeTab } = useViewStore.getState();
         v.tabs.filter((t) => t.id !== tabId).forEach((t) => closeTab(viewId, t.id));
+        onClose();
+    };
+
+    const handleRefresh = () => {
+        useViewStore.getState().reloadTab(viewId, tabId);
         onClose();
     };
 
@@ -40,6 +45,12 @@ export function ContextMenuContent({ viewId, tabId, onClose }: { viewId: string;
         <List type="option">
             <List.Item onClick={handleCloseOthers}>
                 {t`关闭其他`} <SquareX size={16} />
+            </List.Item>
+
+            <div className={css.divider}></div>
+
+            <List.Item onClick={handleRefresh}>
+                {t`刷新`} <RotateCw size={16} />
             </List.Item>
             <List.Item onClick={handleSplitScreen}>
                 {t`分屏`} <Columns2 size={16} />

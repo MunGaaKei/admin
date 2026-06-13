@@ -1,8 +1,8 @@
-import { Button, Datagrid, Message, Modal, Tag } from "@ioca/react";
+import { Button, Datagrid, Message, Popconfirm, Tag } from "@ioca/react";
 import { useLingui } from "@lingui/react/macro";
 import { request } from "@web/api/client.js";
 import { tryto } from "@web/utils/index.js";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import type { Role } from "../types.js";
 
 interface RoleTableProps {
@@ -13,19 +13,19 @@ interface RoleTableProps {
 
 export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
     const { t } = useLingui();
-    const [deleteTarget, setDeleteTarget] = useState<Role | null>(null);
 
-    const handleDelete = useCallback(async () => {
-        if (!deleteTarget) return;
-        const { error } = await tryto(request(`roles/${deleteTarget.id}`, { method: "delete" }));
-        if (error) {
-            Message.error(error.message);
-            return;
-        }
-        Message.success(t`删除成功`);
-        setDeleteTarget(null);
-        onDelete();
-    }, [deleteTarget, onDelete, t]);
+    const handleDelete = useCallback(
+        async (role: Role) => {
+            const { error } = await tryto(request(`roles/${role.id}`, { method: "delete" }));
+            if (error) {
+                Message.error(error.message);
+                return;
+            }
+            Message.success(t`删除成功`);
+            onDelete();
+        },
+        [onDelete, t],
+    );
 
     const columns = useMemo(
         () => [
@@ -52,22 +52,16 @@ export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
                     return (
                         <div className="flex gap-8">
                             <Button size="small" className="bg-blue" onClick={() => onEdit(role)}>{t`编辑`}</Button>
-                            <Button secondary size="small" onClick={() => setDeleteTarget(role)}>{t`删除`}</Button>
+                            <Popconfirm content={t`确定要删除该角色吗？`} okButtonProps={{ className: "bg-error" }} onOk={() => handleDelete(role)}>
+                                <Button className="bg-error" size="small">{t`删除`}</Button>
+                            </Popconfirm>
                         </div>
                     );
                 },
             },
         ],
-        [t, onEdit],
+        [t, onEdit, handleDelete],
     );
 
-    return (
-        <>
-            <Datagrid data={roles} columns={columns as any} className="flex-1 mg-12" rowKey="id" border resizable />
-
-            <Modal visible={!!deleteTarget} onVisibleChange={(v) => !v && setDeleteTarget(null)} title={t`确认删除`} onOk={handleDelete}>
-                <div className="px-12">{t`确定要删除该角色吗？`}</div>
-            </Modal>
-        </>
-    );
+    return <Datagrid data={roles} columns={columns as any} className="flex-1" rowKey="id" border resizable />;
 }

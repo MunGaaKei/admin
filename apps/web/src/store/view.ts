@@ -1,6 +1,6 @@
+import type { MessageDescriptor } from "@lingui/core";
 import { type ComponentType } from "react";
 import { create } from "zustand";
-import type { MessageDescriptor } from "@lingui/core";
 import { menus } from "../../config/menu.js";
 
 export interface TabItem {
@@ -19,6 +19,7 @@ export interface ViewPane {
 interface ViewState {
     views: ViewPane[];
     activeViewId: string | null;
+    reloadCounter: Record<string, number>;
 }
 
 interface ViewActions {
@@ -27,6 +28,7 @@ interface ViewActions {
     setActiveTab: (viewId: string, tabId: string) => void;
     setActiveView: (viewId: string) => void;
     splitView: (tabId: string) => void;
+    reloadTab: (viewId: string, tabId: string) => void;
 }
 
 let _id = 0;
@@ -37,6 +39,7 @@ function nextId() {
 export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
     views: [],
     activeViewId: null,
+    reloadCounter: {},
 
     openTab: (menuKey, options = {}) => {
         const menuIndex = menus.findIndex((m) => m.key === menuKey);
@@ -65,24 +68,17 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
         if (existing) {
             set({
                 activeViewId: targetViewId,
-                views: state2.views.map((v) =>
-                    v.id === targetViewId ? { ...v, activeTabId: menuKey } : v
-                ),
+                views: state2.views.map((v) => (v.id === targetViewId ? { ...v, activeTabId: menuKey } : v)),
             });
             return;
         }
 
-        // Switch to another view if it already has this tab
         if (state2.views.length > 1) {
-            const otherView = state2.views.find(
-                (v) => v.id !== targetViewId && v.tabs.some((t) => t.id === menuKey)
-            );
+            const otherView = state2.views.find((v) => v.id !== targetViewId && v.tabs.some((t) => t.id === menuKey));
             if (otherView) {
                 set({
                     activeViewId: otherView.id,
-                    views: state2.views.map((v) =>
-                        v.id === otherView.id ? { ...v, activeTabId: menuKey } : v
-                    ),
+                    views: state2.views.map((v) => (v.id === otherView.id ? { ...v, activeTabId: menuKey } : v)),
                 });
                 return;
             }
@@ -96,7 +92,6 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
     },
 
     closeTab: (viewId, tabId) => {
-        console.log(viewId, tabId);
         const state = get();
         const view = state.views.find((v) => v.id === viewId);
         if (!view) return;
@@ -147,6 +142,17 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
         set({
             views: [...state.views, { id, tabs: [{ ...tab }], activeTabId: tabId }],
             activeViewId: id,
+        });
+    },
+
+    reloadTab: (viewId, tabId) => {
+        const state = get();
+        const view = state.views.find((v) => v.id === viewId);
+        if (!view || !view.tabs.some((t) => t.id === tabId)) return;
+        set({
+            activeViewId: viewId,
+            views: state.views.map((v) => (v.id === viewId ? { ...v, activeTabId: tabId } : v)),
+            reloadCounter: { ...state.reloadCounter, [tabId]: (state.reloadCounter[tabId] ?? 0) + 1 },
         });
     },
 }));

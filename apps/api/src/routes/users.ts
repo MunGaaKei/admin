@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { prisma } from "../db.js";
+import { hashPassword } from "../utils/password.js";
 
 const users = new Hono();
 
@@ -26,6 +27,28 @@ users.get("/", async (c) => {
     return c.json({ data: usersData, message: "ok" });
 });
 
+users.post("/", async (c) => {
+    const body = await c.req.json<{ username: string; nickname: string; password: string; roleCodes?: string[] }>();
+
+    const password = hashPassword(body.password);
+    const user = await prisma.user.create({
+        data: {
+            username: body.username,
+            nickname: body.nickname,
+            password,
+        },
+    });
+
+    if (body.roleCodes?.length) {
+        const roles = await prisma.role.findMany({ where: { code: { in: body.roleCodes } } });
+        await prisma.userRole.createMany({
+            data: roles.map((r) => ({ userId: user.id, roleId: r.id })),
+        });
+    }
+
+    return c.json({ data: user, message: "创建成功" });
+});
+
 users.put("/:id", async (c) => {
     const id = Number(c.req.param("id"));
     const body = await c.req.json<{ nickname?: string; roleCodes?: string[] }>();
@@ -47,6 +70,14 @@ users.put("/:id", async (c) => {
     }
 
     return c.json({ data: null, message: "更新成功" });
+});
+
+users.delete("/:id", async (c) => {
+    const id = Number(c.req.param("id"));
+
+    await prisma.user.delete({ where: { id } });
+
+    return c.json({ data: null, message: "删除成功" });
 });
 
 export default users;

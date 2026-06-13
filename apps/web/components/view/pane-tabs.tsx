@@ -25,7 +25,7 @@ function DynamicContent({ load }: { load: () => Promise<{ default: ComponentType
 }
 
 export function PaneTabs({ viewId, tabs, activeTabId }: { viewId: string; tabs: TabItem[]; activeTabId?: string }) {
-    const { setActiveTab, setActiveView, closeTab } = useViewStore();
+    const { setActiveTab, setActiveView, closeTab, reloadCounter } = useViewStore();
     const { _ } = useLingui();
 
     const handleTabChange = (to?: string) => {
@@ -37,7 +37,7 @@ export function PaneTabs({ viewId, tabs, activeTabId }: { viewId: string; tabs: 
     const tabItems = tabs.map((t) => ({
         key: t.id,
         title: resolveTitle(t.title, _),
-        content: <DynamicContent load={t.content} />,
+        content: <DynamicContent key={`${t.id}-${reloadCounter[t.id] ?? 0}`} load={t.content} />,
         closable: true,
     }));
 
