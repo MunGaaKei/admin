@@ -43,8 +43,8 @@ importers:
   apps/web:
     dependencies:
       '@ioca/react':
-        specifier: ^1.5.29
-        version: 1.5.29(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^1.5.32
+        version: 1.5.32(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@lingui/core':
         specifier: ^6.2.0
         version: 6.2.0
@@ -561,8 +561,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@ioca/react@1.5.29':
-    resolution: {integrity: sha512-u2A5FP/rn6X1FZrakNGnbxEPBLHjij+BESZKfqs9jd9loxY3rEp3RCCo0W8UXxqD2eCmI0wFzhALFpp61zFezQ==}
+  '@ioca/react@1.5.32':
+    resolution: {integrity: sha512-lbWXGO0oNrQznJAkVxPod5YZK9/qijm3ixs4nGWA3wk0NQsjJdB8eRRkAVEeE8ez1PwfzmrkGynmyrz2zpvqVg==}
     peerDependencies:
       react: ^19.0.0
       react-dom: ^19.0.0
@@ -2418,7 +2418,7 @@ snapshots:
     dependencies:
       hono: 4.12.25
 
-  '@ioca/react@1.5.29(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@ioca/react@1.5.32(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@rc-component/color-picker': 2.0.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@ricons/material': 0.12.0

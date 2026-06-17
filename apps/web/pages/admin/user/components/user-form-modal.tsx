@@ -12,10 +12,7 @@ interface UserFormModalProps {
 
 export interface UserFormModalHandle {
     openAdd(): void;
-    openEdit(
-        id: number,
-        data: { nickname: string; roleCodes: string[] },
-    ): void;
+    openEdit(id: number, data: { nickname: string; roleCodes: string[] }): void;
 }
 
 const UserFormModal = forwardRef<UserFormModalHandle, UserFormModalProps>(({ roles, onSuccess }, ref) => {
@@ -42,11 +39,14 @@ const UserFormModal = forwardRef<UserFormModalHandle, UserFormModalProps>(({ rol
     );
 
     const handleSubmit = useCallback(async () => {
-        const values = form.get();
+        const values = await form.validate();
 
-        const { error } = editingId !== null
-            ? await tryto(request(`users/${editingId}`, { method: "put", json: { nickname: values.nickname, roleCodes: values.roleCodes } }))
-            : await tryto(request("users", { method: "post", json: { username: values.username, nickname: values.nickname, password: values.password, roleCodes: values.roleCodes } }));
+        if (!values) return false;
+
+        const { error } =
+            editingId !== null
+                ? await tryto(request(`users/${editingId}`, { method: "put", json: { nickname: values.nickname, roleCodes: values.roleCodes } }))
+                : await tryto(request("users", { method: "post", json: { username: values.username, nickname: values.nickname, password: values.password, roleCodes: values.roleCodes } }));
 
         if (error) {
             Message.error(error.message);
@@ -62,7 +62,18 @@ const UserFormModal = forwardRef<UserFormModalHandle, UserFormModalProps>(({ rol
 
     return (
         <Modal visible={visible} backdropClosable={false} onVisibleChange={setVisible} title={editingId !== null ? t`用户管理` : t`添加用户`} width={520} onOk={handleSubmit}>
-            <Form form={form} labelWidth="6em" labelInline labelRight className="px-12">
+            <Form
+                form={form}
+                labelWidth="6em"
+                labelInline
+                labelRight
+                className="px-12"
+                rules={{
+                    username: true,
+                    nickname: true,
+                    password: true,
+                }}
+            >
                 {editingId === null && (
                     <Form.Field name="username" required>
                         <Input label={t`用户名`} />

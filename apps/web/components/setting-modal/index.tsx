@@ -1,9 +1,8 @@
-import { Flex, Form, Radio, Select, useTheme } from "@ioca/react";
+import { Flex, Form, Modal, Radio, Select, useTheme } from "@ioca/react";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { Moon, Sun, SunMoon } from "lucide-react";
+import { Cog, Moon, Sun, SunMoon } from "lucide-react";
 import { useSettingStore } from "../../src/store/setting";
-import css from "./index.module.css";
 
 const themeIcons = {
     "theme-light": { icon: Sun, label: msg`亮色` },
@@ -11,15 +10,34 @@ const themeIcons = {
     "theme-auto": { icon: SunMoon, label: msg`自动` },
 };
 
-export default function Setting() {
+interface SettingModalProps {
+    visible: boolean;
+    onClose: () => void;
+}
+
+export default function SettingModal({ visible, onClose }: SettingModalProps) {
     const locale = useSettingStore((s) => s.locale);
     const setLocale = useSettingStore((s) => s.setLocale);
     const { theme, setTheme } = useTheme();
     const { t } = useLingui();
 
     return (
-        <>
-            <Form className={css.form} labelInline labelRight labelWidth="5em" width={400} gap={16}>
+        <Modal
+            visible={visible}
+            backdropClosable
+            onVisibleChange={(v) => {
+                if (!v) onClose();
+            }}
+            title={
+                <>
+                    <Cog size={20} />
+                    {t`设置`}
+                </>
+            }
+            width={480}
+            footer={null}
+        >
+            <Form labelInline labelRight labelWidth="6em" gap={16} className="pd-12 pb-24" style={{ maxHeight: "60vh", alignContent: "flex-start" }}>
                 <Radio
                     label={t`主题`}
                     options={["theme-light", "theme-dark", "theme-auto"]}
@@ -42,7 +60,7 @@ export default function Setting() {
 
                 <Select
                     label={t`语言`}
-                    style={{ width: 320 }}
+                    style={{ width: 200 }}
                     options={[
                         { label: "中文", value: "zh-CN" },
                         { label: "English", value: "en-US" },
@@ -51,6 +69,6 @@ export default function Setting() {
                     onChange={(val) => setLocale(val)}
                 />
             </Form>
-        </>
+        </Modal>
     );
 }

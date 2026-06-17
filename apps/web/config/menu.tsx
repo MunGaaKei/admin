@@ -1,18 +1,36 @@
+import { ITreeItem } from "@ioca/react/components/tree/type";
 import { msg } from "@lingui/core/macro";
-import { Gauge, Telescope } from "lucide-react";
+import { LayoutPanelLeft, ListTodo, ScrollText } from "lucide-react";
+import type { ComponentType } from "react";
 
-export const menus = [
+export interface MenuItem extends Omit<ITreeItem, "title"> {
+    key: string;
+    title: ReturnType<typeof msg>;
+    content: () => Promise<{ default: ComponentType<any> }>;
+    children?: MenuItem[];
+    auth?: string;
+}
+
+export const menus: MenuItem[] = [
     {
         key: "dashboard",
         title: msg`仪表盘`,
-        icon: <Gauge size={20} />,
+        icon: <LayoutPanelLeft size={20} fill="var(--color-7)" />,
         content: () => import("../tabs/dashboard"),
     },
     {
-        key: "explore",
-        title: msg`探索`,
-        icon: <Telescope size={20} />,
-        content: () => import("../tabs/explore"),
+        key: "task",
+        title: msg`任务`,
+        icon: <ListTodo size={20} fill="var(--color-7)" />,
+        content: () => import("../tabs/task"),
+        children: [
+            {
+                key: "file",
+                title: msg`文件`,
+                icon: <ScrollText size={20} />,
+                content: () => import("../tabs/task/files/file"),
+            },
+        ],
     },
 ];
 

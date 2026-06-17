@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { type ComponentType } from "react";
 import { create } from "zustand";
-import { menus } from "../../config/menu.js";
+import { menus, type MenuItem } from "../../config/menu.js";
 
 export interface TabItem {
     id: string;
@@ -31,6 +31,17 @@ interface ViewActions {
     reloadTab: (viewId: string, tabId: string) => void;
 }
 
+function findMenu(key: string): MenuItem | undefined {
+    for (const m of menus) {
+        if (m.key === key) return m;
+        if (m.children) {
+            const child = m.children.find((c) => c.key === key);
+            if (child) return child;
+        }
+    }
+    return undefined;
+}
+
 let _id = 0;
 function nextId() {
     return `view-${++_id}`;
@@ -42,9 +53,9 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
     reloadCounter: {},
 
     openTab: (menuKey, options = {}) => {
+        const menu = findMenu(menuKey);
+        if (!menu) return;
         const menuIndex = menus.findIndex((m) => m.key === menuKey);
-        if (menuIndex === -1) return;
-        const menu = menus[menuIndex];
 
         const state = get();
         let targetViewId = state.activeViewId;

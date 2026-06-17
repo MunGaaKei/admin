@@ -13,21 +13,29 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "ID"
 msgstr "ID"
 
 #: config/menu.tsx
-msgid "个人资料"
-msgstr "个人资料"
+#~ msgid "个人资料"
+#~ msgstr "个人资料"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "主题"
 msgstr "主题"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "亮色"
 msgstr "亮色"
+
+#: config/menu.tsx
+msgid "仪表盘"
+msgstr "仪表盘"
+
+#: config/menu.tsx
+msgid "任务"
+msgstr "任务"
 
 #: components/view/pane-context-menu.tsx
 msgid "关闭其他"
@@ -46,16 +54,26 @@ msgid "创建权限失败"
 msgstr "创建权限失败"
 
 #: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "删除"
 msgstr "删除"
 
 #: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "删除成功"
 msgstr "删除成功"
+
+#: components/view/pane-context-menu.tsx
+msgid "刷新"
+msgstr "刷新"
 
 #: pages/admin/roles/components/permission-field.tsx
 msgid "可用权限"
 msgstr "可用权限"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "密码"
+msgstr "密码"
 
 #: pages/admin/roles/components/permission-field.tsx
 msgid "当前角色权限"
@@ -71,24 +89,29 @@ msgid "搜索"
 msgstr "搜索"
 
 #: pages/admin/roles/components/role-table.tsx
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "操作"
 msgstr "操作"
 
-#: pages/admin/user/+Page.tsx
+#: config/menu.tsx
+msgid "文件"
+msgstr "文件"
+
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "昵称"
 msgstr "昵称"
 
 #: pages/admin/user/+Page.tsx
-msgid "暂无角色"
-msgstr "暂无角色"
+#~ msgid "暂无角色"
+#~ msgstr "暂无角色"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "暗色"
 msgstr "暗色"
 
 #: pages/admin/roles/components/role-form-modal.tsx
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
 msgid "更新成功"
 msgstr "更新成功"
 
@@ -98,27 +121,38 @@ msgid "权限"
 msgstr "权限"
 
 #: pages/admin/roles/components/permission-field.tsx
-msgid "权限列表"
-msgstr "权限列表"
+#~ msgid "权限列表"
+#~ msgstr "权限列表"
 
 #: pages/admin/roles/components/permission-field.tsx
 msgid "权限管理"
 msgstr "权限管理"
 
 #: pages/admin/roles/+Page.tsx
+#: pages/admin/user/+Page.tsx
 msgid "添加"
 msgstr "添加"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "添加成功"
+msgstr "添加成功"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "添加用户"
+msgstr "添加用户"
 
 #: pages/admin/roles/components/role-form-modal.tsx
 msgid "添加角色"
 msgstr "添加角色"
 
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "用户名"
 msgstr "用户名"
 
 #: config/menu.tsx
 #: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
 msgid "用户管理"
 msgstr "用户管理"
 
@@ -126,19 +160,24 @@ msgstr "用户管理"
 msgid "登陆"
 msgstr "登陆"
 
+#: pages/admin/user/components/user-table.tsx
+msgid "确定要删除该用户吗？"
+msgstr "确定要删除该用户吗？"
+
 #: pages/admin/roles/components/role-table.tsx
 msgid "确定要删除该角色吗？"
 msgstr "确定要删除该角色吗？"
 
 #: pages/admin/roles/components/role-table.tsx
-msgid "确认删除"
-msgstr "确认删除"
+#~ msgid "确认删除"
+#~ msgstr "确认删除"
 
 #: pages/admin/user/+Page.tsx
-msgid "管理"
-msgstr "管理"
+#~ msgid "管理"
+#~ msgstr "管理"
 
 #: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "编辑"
 msgstr "编辑"
 
@@ -146,11 +185,12 @@ msgstr "编辑"
 msgid "编辑角色"
 msgstr "编辑角色"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "自动"
 msgstr "自动"
 
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "角色"
 msgstr "角色"
 
@@ -169,15 +209,15 @@ msgstr "角色名称"
 msgid "角色管理"
 msgstr "角色管理"
 
-#: components/aside/index.tsx
-#: config/menu.tsx
+#: components/aside/popup.tsx
+#: components/setting-modal/index.tsx
 msgid "设置"
 msgstr "设置"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "语言"
 msgstr "语言"
 
-#: components/aside/index.tsx
+#: components/aside/popup.tsx
 msgid "退出"
 msgstr "退出"

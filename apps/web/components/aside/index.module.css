@@ -5,6 +5,7 @@
     width: 240px;
     border-right: 1px solid var(--color-9);
     flex-shrink: 0;
+    transition: all 0.12s ease;
 }
 
 .collapsed {
@@ -12,9 +13,15 @@
     width: 60px;
     gap: 12px;
     .header,
-    .footer {
+    .footer,
+    .user {
         flex-direction: column;
     }
+
+    .menuContainer {
+        background: var(--background-opacity-1);
+    }
+
     .menu {
         width: 240px;
         background: var(--background);
@@ -35,12 +42,15 @@
         padding: 0 12px;
         flex-shrink: 0;
     }
+    .hide {
+        display: none;
+    }
 }
 
 .header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 4px;
 }
 
 .logo {
@@ -55,6 +65,7 @@
     width: 100%;
     position: relative;
     z-index: 10;
+    border-radius: var(--radius);
 
     &:hover {
         .menu {
@@ -115,6 +126,15 @@
     gap: 4px;
 }
 
+.user {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+    max-width: 100%;
+    flex: 1;
+}
+
 .avatar {
     width: 32px;
     height: 32px;
@@ -123,7 +143,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: default;
 }
 
 .nickname {

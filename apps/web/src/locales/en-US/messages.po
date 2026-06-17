@@ -13,21 +13,29 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "ID"
 msgstr "ID"
 
 #: config/menu.tsx
-msgid "个人资料"
-msgstr "Profile"
+#~ msgid "个人资料"
+#~ msgstr "Profile"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "主题"
 msgstr "Theme"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "亮色"
 msgstr "Light"
+
+#: config/menu.tsx
+msgid "仪表盘"
+msgstr "Dashboard"
+
+#: config/menu.tsx
+msgid "任务"
+msgstr "Task"
 
 #: components/view/pane-context-menu.tsx
 msgid "关闭其他"
@@ -46,16 +54,26 @@ msgid "创建权限失败"
 msgstr "Failed to Create Permission"
 
 #: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "删除"
 msgstr "Delete"
 
 #: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "删除成功"
 msgstr "Deleted Successfully"
+
+#: components/view/pane-context-menu.tsx
+msgid "刷新"
+msgstr "Refresh"
 
 #: pages/admin/roles/components/permission-field.tsx
 msgid "可用权限"
 msgstr "Available Permissions"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "密码"
+msgstr "Password"
 
 #: pages/admin/roles/components/permission-field.tsx
 msgid "当前角色权限"
@@ -71,24 +89,29 @@ msgid "搜索"
 msgstr "Search"
 
 #: pages/admin/roles/components/role-table.tsx
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "操作"
 msgstr "Actions"
 
-#: pages/admin/user/+Page.tsx
+#: config/menu.tsx
+msgid "文件"
+msgstr "File"
+
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "昵称"
 msgstr "Nickname"
 
 #: pages/admin/user/+Page.tsx
-msgid "暂无角色"
-msgstr "No Roles"
+#~ msgid "暂无角色"
+#~ msgstr "No Roles"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "暗色"
 msgstr "Dark"
 
 #: pages/admin/roles/components/role-form-modal.tsx
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
 msgid "更新成功"
 msgstr "Updated Successfully"
 
@@ -98,27 +121,38 @@ msgid "权限"
 msgstr "Permissions"
 
 #: pages/admin/roles/components/permission-field.tsx
-msgid "权限列表"
-msgstr "Permission List"
+#~ msgid "权限列表"
+#~ msgstr "Permission List"
 
 #: pages/admin/roles/components/permission-field.tsx
 msgid "权限管理"
 msgstr "Permission Management"
 
 #: pages/admin/roles/+Page.tsx
+#: pages/admin/user/+Page.tsx
 msgid "添加"
-msgstr "Add"
+msgstr "Create"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "添加成功"
+msgstr "Created Successfully"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "添加用户"
+msgstr "Create User"
 
 #: pages/admin/roles/components/role-form-modal.tsx
 msgid "添加角色"
 msgstr "Add Role"
 
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "用户名"
 msgstr "Username"
 
 #: config/menu.tsx
 #: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
 msgid "用户管理"
 msgstr "User Management"
 
@@ -126,19 +160,24 @@ msgstr "User Management"
 msgid "登陆"
 msgstr "Login"
 
+#: pages/admin/user/components/user-table.tsx
+msgid "确定要删除该用户吗？"
+msgstr "Are you sure you want to delete this user?"
+
 #: pages/admin/roles/components/role-table.tsx
 msgid "确定要删除该角色吗？"
 msgstr "Are you sure you want to delete this role?"
 
 #: pages/admin/roles/components/role-table.tsx
-msgid "确认删除"
-msgstr "Confirm Delete"
+#~ msgid "确认删除"
+#~ msgstr "Confirm Delete"
 
 #: pages/admin/user/+Page.tsx
-msgid "管理"
-msgstr "Manage"
+#~ msgid "管理"
+#~ msgstr "Manage"
 
 #: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "编辑"
 msgstr "Edit"
 
@@ -146,11 +185,12 @@ msgstr "Edit"
 msgid "编辑角色"
 msgstr "Edit Role"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "自动"
 msgstr "Auto"
 
-#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
 msgid "角色"
 msgstr "Role"
 
@@ -169,15 +209,15 @@ msgstr "Role Name"
 msgid "角色管理"
 msgstr "Role Management"
 
-#: components/aside/index.tsx
-#: config/menu.tsx
+#: components/aside/popup.tsx
+#: components/setting-modal/index.tsx
 msgid "设置"
 msgstr "Settings"
 
-#: tabs/setting/index.tsx
+#: components/setting-modal/index.tsx
 msgid "语言"
 msgstr "Language"
 
-#: components/aside/index.tsx
+#: components/aside/popup.tsx
 msgid "退出"
 msgstr "Logout"

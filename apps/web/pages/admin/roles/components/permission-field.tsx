@@ -1,4 +1,4 @@
-import { Button, Input, Message, Modal, Pill, Tag } from "@ioca/react";
+import { Input, Message, Modal, Pill, Tag } from "@ioca/react";
 import { useLingui } from "@lingui/react/macro";
 import { request } from "@web/api/client.js";
 import { tryto } from "@web/utils/index.js";
@@ -88,14 +88,6 @@ const PermissionField = forwardRef<PermissionFieldHandle, PermissionFieldProps>(
         [permissions, t],
     );
 
-    const handleOuterPillUpdate = useCallback(
-        async (_newValue: any, _oldValue: any, type: "delete" | "create" | "update") => {
-            if (type !== "create") return true;
-            return ensurePermission(_newValue);
-        },
-        [ensurePermission],
-    );
-
     const handleMiddlePillUpdate = useCallback(
         async (_newValue: any, _oldValue: any, type: "delete" | "create" | "update") => {
             if (type === "create") {
@@ -156,9 +148,16 @@ const PermissionField = forwardRef<PermissionFieldHandle, PermissionFieldProps>(
 
     return (
         <>
-            <div className="flex gap-4 items-start">
-                <Pill label={t`权限`} value={value} onChange={onChange} onUpdate={handleOuterPillUpdate} className="flex-1" />
-                <Button size="small" secondary onClick={handleOpenModal}>{t`权限列表`}</Button>
+            <div className="flex items-start" style={{ gap: ".5em" }}>
+                <span style={{ fontWeight: 500 }} className="i-input-label-text">{t`权限`}</span>
+                {value.map((code) => (
+                    <Tag key={code} className="i-pill" onClose={() => onChange?.(value.filter((c) => c !== code))}>
+                        {code}
+                    </Tag>
+                ))}
+                <Tag className="i-pill i-pill-create" onClick={handleOpenModal}>
+                    <b>＋</b>
+                </Tag>
             </div>
 
             <Modal visible={modalVisible} onVisibleChange={setModalVisible} title={t`权限管理`} width={520} onOk={handleOk} onClose={() => setModalVisible(false)}>

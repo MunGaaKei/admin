@@ -47,7 +47,9 @@ const RoleFormModal = forwardRef<RoleFormModalHandle, RoleFormModalProps>(({ per
     );
 
     const handleSubmit = useCallback(async () => {
-        const values = form.get();
+        const values = await form.validate();
+        if (!values) return false;
+
         const codes: string[] = values.permissionCodes ?? [];
         const mapping = permissionFieldRef.current?.getMapping() ?? {};
         values.permissionIds = codes.map((code: string) => mapping[code]).filter(Boolean);
@@ -67,7 +69,17 @@ const RoleFormModal = forwardRef<RoleFormModalHandle, RoleFormModalProps>(({ per
 
     return (
         <Modal visible={visible} backdropClosable={false} onVisibleChange={setVisible} title={editingId !== null ? t`编辑角色` : t`添加角色`} width={520} onOk={handleSubmit}>
-            <Form form={form} labelWidth="6em" labelInline labelRight className="px-12">
+            <Form
+                form={form}
+                labelWidth="6em"
+                labelInline
+                labelRight
+                className="px-12"
+                rules={{
+                    name: true,
+                    code: true,
+                }}
+            >
                 <Form.Field name="name" required>
                     <Input label={t`角色名称`} />
                 </Form.Field>

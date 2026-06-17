@@ -28,6 +28,12 @@
         height: 100%;
         overflow: auto;
     }
+    :global(.i-tab-nav) {
+        min-width: 4em;
+    }
+    :global(.i-tab-active) {
+        font-weight: 500;
+    }
 }
 
 @keyframes contextMenuIn {
@@ -43,21 +49,8 @@
 
 .contextMenu {
     min-width: 132px;
-    font-size: 14px;
     box-shadow: var(--shadow);
     background-color: var(--background-opacity);
     backdrop-filter: blur(12px);
-    border-radius: var(--radius);
-    padding: 4px 0;
     animation: contextMenuIn 0.12s ease-out;
-    :global(.i-list-item) {
-        margin-inline: 4px;
-    }
-}
-
-.divider {
-    margin: 4px 0;
-    height: 1px;
-    flex-shrink: 0;
-    background-color: var(--background-opacity-1);
 }

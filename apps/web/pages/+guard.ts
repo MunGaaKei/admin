@@ -1,5 +1,5 @@
 import type { PageContextServer } from "vike/types";
-import { redirect } from "vike/abort";
+import { redirect, render } from "vike/abort";
 import { useAuth } from "../src/store/auth";
 import { request } from "../src/api/client.js";
 import type { ApiResponse } from "../src/types.js";
@@ -42,7 +42,7 @@ async function guard(pageContext: PageContextServer) {
   if (pathname.startsWith("/admin")) {
     const permissions = data.data.user.permissions;
     if (!permissions.includes("admin") && !permissions.includes("*")) {
-      throw redirect("/");
+      throw render(401);
     }
   }
 }
