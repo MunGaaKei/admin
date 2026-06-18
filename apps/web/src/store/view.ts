@@ -8,6 +8,8 @@ export interface TabItem {
     title: string | MessageDescriptor;
     menuIndex: number;
     content: () => Promise<{ default: ComponentType<any> }>;
+    auth?: string;
+    error?: boolean;
 }
 
 export interface ViewPane {
@@ -23,7 +25,7 @@ interface ViewState {
 }
 
 interface ViewActions {
-    openTab: (menuKey: string, options?: { split?: boolean }) => void;
+    openTab: (menuKey: string, options?: { split?: boolean; errorCode?: number }) => void;
     closeTab: (viewId: string, tabId: string) => void;
     setActiveTab: (viewId: string, tabId: string) => void;
     setActiveView: (viewId: string) => void;
@@ -42,6 +44,17 @@ function findMenu(key: string): MenuItem | undefined {
     return undefined;
 }
 
+function findMenuIndex(key: string): number {
+    for (let i = 0; i < menus.length; i++) {
+        if (menus[i].key === key) return i;
+        if (menus[i].children) {
+            const childIndex = menus[i].children?.findIndex((c) => c.key === key) ?? -1;
+            if (childIndex !== -1) return menus.length + childIndex;
+        }
+    }
+    return -1;
+}
+
 let _id = 0;
 function nextId() {
     return `view-${++_id}`;
@@ -54,8 +67,23 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
 
     openTab: (menuKey, options = {}) => {
         const menu = findMenu(menuKey);
-        if (!menu) return;
-        const menuIndex = menus.findIndex((m) => m.key === menuKey);
+        if (menu && !menu.content) return;
+
+        // For non-existent menu key, set error code in URL if not already present
+        let errorCodeFromUrl: string | null = null;
+        if (!menu && typeof window !== "undefined") {
+            const url = new URL(window.location.href);
+            errorCodeFromUrl = url.searchParams.get("errorCode");
+            if (!errorCodeFromUrl) {
+                url.searchParams.set("errorCode", String(options.errorCode ?? "404"));
+                window.history.replaceState(null, "", url.pathname + url.search);
+            }
+        }
+
+        const tabContent = menu ? menu.content : () => import("../../tabs/error");
+        const tabTitle = menu ? menu.title : String(options.errorCode ?? errorCodeFromUrl ?? "404");
+        const tabAuth = menu?.auth;
+        const tabMenuIndex = menu ? findMenuIndex(menuKey) : -1;
 
         const state = get();
         let targetViewId = state.activeViewId;
@@ -66,11 +94,18 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
             set({ views: [...state.views, { id, tabs: [], activeTabId: null }], activeViewId: id });
         }
 
+        function makeTab(): TabItem {
+            const tab: TabItem = { id: menuKey, title: tabTitle, menuIndex: tabMenuIndex, content: tabContent, auth: tabAuth };
+            if (!menu) tab.error = true;
+            return tab;
+        }
+
         const state2 = get();
         if (!targetViewId || !state2.views.some((v) => v.id === targetViewId)) {
             const id = nextId();
-            const tab = { id: menuKey, title: menu.title, menuIndex, content: menu.content };
+            const tab = makeTab();
             set({ views: [...state2.views, { id, tabs: [tab], activeTabId: menuKey }], activeViewId: id });
+            cleanup();
             return;
         }
 
@@ -81,6 +116,7 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
                 activeViewId: targetViewId,
                 views: state2.views.map((v) => (v.id === targetViewId ? { ...v, activeTabId: menuKey } : v)),
             });
+            cleanup();
             return;
         }
 
@@ -91,15 +127,43 @@ export const useViewStore = create<ViewState & ViewActions>()((set, get) => ({
                     activeViewId: otherView.id,
                     views: state2.views.map((v) => (v.id === otherView.id ? { ...v, activeTabId: menuKey } : v)),
                 });
+                cleanup();
                 return;
             }
         }
 
-        const tab = { id: menuKey, title: menu.title, menuIndex, content: menu.content };
+        const tab = makeTab();
         set({
             activeViewId: targetViewId,
             views: state2.views.map((v) => (v.id === targetViewId ? { ...v, tabs: [...v.tabs, tab], activeTabId: menuKey } : v)),
         });
+        cleanup();
+
+        function cleanup() {
+            if (!menu) return;
+            const st = get();
+            const hasErrorTab = st.views.some((v) => v.tabs.some((t) => t.error));
+            if (!hasErrorTab) return;
+
+            const cleanedViews = st.views
+                .map((v) => ({
+                    ...v,
+                    tabs: v.tabs.filter((t) => !t.error),
+                    activeTabId: v.activeTabId && v.tabs.some((t) => t.id === v.activeTabId && !t.error) ? v.activeTabId : (v.tabs.filter((t) => !t.error)[0]?.id ?? null),
+                }))
+                .filter((v) => v.tabs.length > 0);
+
+            set({
+                views: cleanedViews,
+                activeViewId: cleanedViews.length > 0 ? (cleanedViews.find((v) => v.id === st.activeViewId)?.id ?? cleanedViews[0].id) : null,
+            });
+
+            if (typeof window !== "undefined") {
+                const url = new URL(window.location.href);
+                url.searchParams.delete("errorCode");
+                window.history.replaceState(null, "", url.pathname + url.search);
+            }
+        }
     },
 
     closeTab: (viewId, tabId) => {

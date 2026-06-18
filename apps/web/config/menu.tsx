@@ -1,14 +1,15 @@
 import { ITreeItem } from "@ioca/react/components/tree/type";
 import { msg } from "@lingui/core/macro";
 import { LayoutPanelLeft, ListTodo, ScrollText } from "lucide-react";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 export interface MenuItem extends Omit<ITreeItem, "title"> {
     key: string;
-    title: ReturnType<typeof msg>;
-    content: () => Promise<{ default: ComponentType<any> }>;
+    title: ReturnType<typeof msg> | ReactNode;
+    content?: () => Promise<{ default: ComponentType<any> }>;
     children?: MenuItem[];
     auth?: string;
+    hidden?: boolean;
 }
 
 export const menus: MenuItem[] = [

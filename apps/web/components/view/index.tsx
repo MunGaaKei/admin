@@ -19,6 +19,7 @@ export function View() {
     }, [tabParam]);
 
     useEffect(() => {
+        if (views.length === 0) return;
         const activeView = views.find((v) => v.id === activeViewId);
         const tabId = activeView?.activeTabId;
         const url = new URL(window.location.href);

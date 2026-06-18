@@ -2,6 +2,7 @@ import { Tag, Tree } from "@ioca/react";
 import { useLingui } from "@lingui/react";
 import { memo } from "react";
 import { usePageContext } from "vike-react/usePageContext";
+import { navigate } from "vike/client/router";
 import { adminMenus, menus, type MenuItem } from "../../config/menu.js";
 import { useAuth } from "../../src/store/auth";
 import { useViewStore } from "../../src/store/view.js";
@@ -10,6 +11,8 @@ import css from "./index.module.css";
 export const Menu = memo(() => {
     const openTab = useViewStore((s) => s.openTab);
     const { _ } = useLingui();
+    const pageContext = usePageContext();
+    const isError = !!(pageContext as any).is404 || !!(pageContext as any).abortStatusCode;
     const selected = useViewStore((s) => {
         if (!s.activeViewId) return "";
         const view = s.views.find((v) => v.id === s.activeViewId);
@@ -19,16 +22,16 @@ export const Menu = memo(() => {
     const user = useAuth((s) => s.user);
     const permissions = user?.permissions ?? [];
 
-    const visibleMenus = menus.filter((m) => !m.auth || permissions.includes(m.auth));
-
     function translateMenu(items: MenuItem[]): any {
-        return items.map((m) => ({
-            ...m,
-            title: _(m.title),
-            children: m.children ? translateMenu(m.children) : undefined,
-        }));
+        return items
+            .filter((m) => !m.hidden && (!m.auth || permissions.includes(m.auth)))
+            .map((m) => ({
+                ...m,
+                title: _(m.title),
+                children: m.children ? translateMenu(m.children) : undefined,
+            }));
     }
-    const translatedMenus = translateMenu(visibleMenus);
+    const translatedMenus = translateMenu(menus);
 
     return (
         <div className={css.menuContainer}>
@@ -46,7 +49,12 @@ export const Menu = memo(() => {
                         );
                     }}
                     onItemClick={(item: any) => {
-                        if (item.key) {
+                        if (!item.key) return;
+                        if (isError) {
+                            navigate(`/?tab=${item.key}`);
+                        } else if (item.href) {
+                            navigate(item.href);
+                        } else {
                             openTab(item.key);
                         }
                     }}

@@ -1,34 +1,32 @@
-import { Button } from "@ioca/react";
-import { navigate } from "vike/client/router";
+import { useEffect, useState } from "react";
+import { usePageContext } from "vike-react/usePageContext";
+import { useViewStore } from "../../src/store/view.js";
 
-export default function Page({ is404, abortStatusCode }: { is404?: boolean; abortStatusCode?: number }) {
-  const statusCode = is404 ? 404 : abortStatusCode ?? 500;
+export default function Page() {
+    const { urlPathname, is404, abortStatusCode } = usePageContext();
+    const code = is404 ? 404 : (abortStatusCode ?? 500);
+    const [showInline, setShowInline] = useState(true);
 
-  const meta: Record<number, { title: string; description: string }> = {
-    401: { title: "401 Unauthorized", description: "You don't have permission to access this page." },
-    404: { title: "404 Not Found", description: "The page you're looking for doesn't exist or has been moved." },
-  };
+    useEffect(() => {
+        if (urlPathname.startsWith("/admin")) {
+            setShowInline(true);
+            return;
+        }
 
-  const m = meta[statusCode] ?? { title: "Something went wrong", description: "An unexpected error occurred." };
+        const { views } = useViewStore.getState();
+        if (!views.some((v) => v.tabs.some((t) => t.id === "error" || t.error))) {
+            useViewStore.getState().openTab("error", { errorCode: code });
+        }
+        setShowInline(false);
+    }, []);
 
-  return (
-    <div
-      style={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 16,
-      }}
-    >
-      <h1 style={{ fontSize: 72, fontWeight: 700, color: "var(--color-text-secondary)", margin: 0 }}>
-        {statusCode}
-      </h1>
-      <p style={{ fontSize: 18, color: "var(--color-text-tertiary)", margin: 0 }}>{m.description}</p>
-      <Button onClick={() => navigate("/")} style={{ marginTop: 8 }}>
-        Go Home
-      </Button>
-    </div>
-  );
+    if (!showInline) return null;
+
+    return (
+        <div className="flex flex-1 h-100">
+            <h2 className="mg-auto" style={{ fontSize: 60 }}>
+                {code}
+            </h2>
+        </div>
+    );
 }

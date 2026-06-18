@@ -1,9 +1,9 @@
-import { ListTodo } from "lucide-react";
+import { Datagrid } from "@ioca/react";
 
 export default function Task() {
     return (
-        <div className="flex h-100">
-            <ListTodo className="mg-auto color-9" size={120} />
+        <div className="flex flex-1 flex-column h-100 pd-12">
+            <Datagrid data={[]} className="flex-1" />
         </div>
     );
 }

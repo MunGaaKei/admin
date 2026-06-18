@@ -67,11 +67,11 @@ export function Aside({ mode = "main" }: AsideProps) {
                 <footer className={css.footer}>
                     <Dropdown className={css.popup} position="right" width={132} content={(close) => <UserPopup close={close} onLogout={handleLogout} onOpenSetting={() => setSettingVisible(true)} />}>
                         <div className={css.user}>
-                            <div className={css.avatar}>{initials}</div>
+                            {sidebarCollapsed && <div className={css.avatar}>{initials}</div>}
 
                             {!sidebarCollapsed && <b className={css.nickname}>{user?.nickname}</b>}
 
-                            <MoreHorizontal size={20} />
+                            {!sidebarCollapsed && <MoreHorizontal size={20} />}
                         </div>
                     </Dropdown>
                 </footer>
