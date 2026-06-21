@@ -38,8 +38,12 @@ async function guard(pageContext: PageContextServer) {
   // Refresh user info in persisted store
   useAuth.setState({ user: data.data.user as any });
 
-  // Check admin permission for /admin routes
+  // Check admin feature flag
   if (pathname.startsWith("/admin")) {
+    if (import.meta.env.VITE_ADMIN_ENABLE !== "true") {
+      throw render(404);
+    }
+
     const permissions = data.data.user.permissions;
     if (!permissions.includes("admin") && !permissions.includes("*")) {
       throw render(401);

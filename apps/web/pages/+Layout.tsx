@@ -15,12 +15,15 @@ function AdminGuard({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         if (!user) return;
-        if (!permissions.includes("admin") && !permissions.includes("*")) {
+        if (import.meta.env.VITE_ADMIN_ENABLE !== "true") {
+            navigate("/?tab=error-display&errorCode=404");
+        } else if (!permissions.includes("admin") && !permissions.includes("*")) {
             navigate("/?tab=error-display&errorCode=401");
         }
     }, [user]);
 
     if (!user) return null;
+    if (import.meta.env.VITE_ADMIN_ENABLE !== "true") return null;
     if (!permissions.includes("admin") && !permissions.includes("*")) return null;
     return <>{children}</>;
 }

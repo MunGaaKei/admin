@@ -37,6 +37,10 @@ export const menus: MenuItem[] = [
 
 export const adminMenus = [
     {
+        key: "/",
+        title: msg`首页`,
+    },
+    {
         key: "/user",
         title: msg`用户管理`,
     },

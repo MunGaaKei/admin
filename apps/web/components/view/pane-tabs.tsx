@@ -1,7 +1,7 @@
-import { Tabs } from "@ioca/react";
-import { useEffect, useState, type ComponentType } from "react";
-import { useLingui } from "@lingui/react";
+import { Loading, Tabs } from "@ioca/react";
 import type { MessageDescriptor } from "@lingui/core";
+import { useLingui } from "@lingui/react";
+import { useEffect, useState, type ComponentType } from "react";
 import { useAuth } from "../../src/store/auth.js";
 import { useViewStore, type TabItem } from "../../src/store/view.js";
 import css from "./view.module.css";
@@ -32,37 +32,12 @@ function DynamicContent({ load }: { load: () => Promise<{ default: ComponentType
         };
     }, [load]);
     if (state === "loading") {
-        return (
-            <div
-                style={{
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "var(--color-text-secondary)",
-                }}
-            >
-                Loading...
-            </div>
-        );
+        return <Loading />;
     }
     if (state === "error") {
-        return (
-            <div
-                style={{
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 72,
-                    fontWeight: 700,
-                    color: "var(--color-text-secondary)",
-                }}
-            >
-                Error
-            </div>
-        );
+        return <h2 className="mg-12 text-center">Error</h2>;
     }
+
     if (!Component) return null;
     return <Component />;
 }
@@ -72,21 +47,7 @@ function TabContent({ tab, reloadCount }: { tab: TabItem; reloadCount: number })
     const permissions = user?.permissions ?? [];
 
     if (tab.auth && !permissions.includes(tab.auth)) {
-        return (
-            <div
-                style={{
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 72,
-                    fontWeight: 700,
-                    color: "var(--color-text-secondary)",
-                }}
-            >
-                401
-            </div>
-        );
+        return <h2 className="mg-12 text-center">401</h2>;
     }
 
     return <DynamicContent key={`${tab.id}-${reloadCount}`} load={tab.content} />;
@@ -109,5 +70,5 @@ export function PaneTabs({ viewId, tabs, activeTabId }: { viewId: string; tabs: 
         closable: true,
     }));
 
-    return <Tabs className={css.tabs} type="pane" tabs={tabItems} active={activeTabId} onTabChange={handleTabChange} onClose={(key) => closeTab(viewId, key)} />;
+    return <Tabs className={`${css.tabs} flex flex-column`} type="pane" tabs={tabItems} active={activeTabId} onTabChange={handleTabChange} onClose={(key) => closeTab(viewId, key)} />;
 }

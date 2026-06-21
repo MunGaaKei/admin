@@ -32,7 +32,7 @@
         min-width: 4em;
         padding: 8px 12px;
     }
-    :global(.i-tab-active) {
+    :global(.i-tab-active.i-tab-nav) {
         font-weight: 500;
     }
 }
@@ -54,4 +54,5 @@
     background-color: var(--background-opacity);
     backdrop-filter: blur(12px);
     animation: contextMenuIn 0.12s ease-out;
+    border: 1px solid var(--background-opacity-2);
 }

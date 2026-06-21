@@ -1,6 +1,6 @@
-import { Button, Form, Input, Message } from "@ioca/react";
+import { Button, Flex, Form, Input, Message } from "@ioca/react";
 import { useLingui } from "@lingui/react/macro";
-import { CircleUserRound, LockKeyhole } from "lucide-react";
+import { RectangleEllipsis, SquareUserRound } from "lucide-react";
 import { useState } from "react";
 import { navigate } from "vike/client/router";
 import { useAuth } from "../../src/store/auth";
@@ -39,16 +39,33 @@ export default function Page() {
                 username: true,
                 password: true,
             }}
+            initialValues={{
+                username: "admin",
+                password: "admin",
+            }}
             width={280}
             className={css.form}
             onEnter={handleLogin}
         >
+            <Flex align="center" gap={8} justify="space-between">
+                <h2 className={css.title}>ADMIN</h2>
+
+                <img src="/logo.png" className={css.logo} />
+            </Flex>
+
             <Form.Field name="username">
-                <Input prepend={<CircleUserRound className="ml-8" size={20} />} border />
+                <Input
+                    prepend={<SquareUserRound className="ml-8" size={20} />}
+                    border
+                />
             </Form.Field>
 
             <Form.Field name="password">
-                <Input prepend={<LockKeyhole className="ml-8" size={20} />} type="password" border />
+                <Input
+                    prepend={<RectangleEllipsis className="ml-8" size={20} />}
+                    type="password"
+                    border
+                />
             </Form.Field>
 
             <Button onClick={handleLogin} loading={loading}>
