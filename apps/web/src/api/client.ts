@@ -1,7 +1,9 @@
 import ky, { type Options, isHTTPError } from "ky";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api";
+
 const api = ky.create({
-  prefix: "/api",
+  prefix: API_BASE,
   hooks: {
     beforeError: [
       (state) => {

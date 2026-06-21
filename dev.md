@@ -16,6 +16,7 @@ cd ../..
 # 4. 首次生成翻译 catalog
 cd apps/web
 pnpm extract
+修改.po文件
 pnpm compile --typescript
 cd ../..
 
@@ -27,11 +28,11 @@ pnpm dev
 
 ## 日常开发
 
-| 场景 | 命令 |
-|------|------|
-| 启动开发服务器 | `pnpm dev` |
-| 修改了数据库 schema | `cd apps/api && pnpm db:push` |
-| 修改了翻译文本后 | `cd apps/web && pnpm extract && pnpm compile --typescript` |
-| 生产构建 | `pnpm build` |
+| 场景                | 命令                                                       |
+| ------------------- | ---------------------------------------------------------- |
+| 启动开发服务器      | `pnpm dev`                                                 |
+| 修改了数据库 schema | `cd apps/api && pnpm db:push`                              |
+| 修改了翻译文本后    | `cd apps/web && pnpm extract && pnpm compile --typescript` |
+| 生产构建            | `pnpm build`                                               |
 
-> 新增或修改 `msg``xxx``` 等翻译标记后，需要手动执行 `extract` 更新 `.po` 文件，然后 `compile` 编译为运行时文件。`.po` 文件需要提交到 git。
+> 新增或修改 `msg``xxx``` 等翻译标记后，需要手动执行 `extract`更新`.po`文件，然后`compile` 编译为运行时文件。`.po` 文件需要提交到 git。

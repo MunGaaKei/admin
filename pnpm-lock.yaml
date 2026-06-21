@@ -21,7 +21,7 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4(hono@4.12.25)
       '@prisma/adapter-better-sqlite3':
-        specifier: ^7.0.0
+        specifier: ^7.8.0
         version: 7.8.0
       '@prisma/client':
         specifier: ^7.0.0
