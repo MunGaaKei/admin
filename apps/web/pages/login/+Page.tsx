@@ -43,7 +43,7 @@ export default function Page() {
                 username: "admin",
                 password: "admin",
             }}
-            width={280}
+            width={320}
             className={css.form}
             onEnter={handleLogin}
         >

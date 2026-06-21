@@ -2,6 +2,7 @@ import { Flex, Form, Modal, Radio, Select, useTheme } from "@ioca/react";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { Cog, Moon, Sun, SunMoon } from "lucide-react";
+import { fonts } from "../../src/config/fonts";
 import { useSettingStore } from "../../src/store/setting";
 
 const themeIcons = {
@@ -18,6 +19,8 @@ interface SettingModalProps {
 export default function SettingModal({ visible, onClose }: SettingModalProps) {
     const locale = useSettingStore((s) => s.locale);
     const setLocale = useSettingStore((s) => s.setLocale);
+    const font = useSettingStore((s) => s.font);
+    const setFont = useSettingStore((s) => s.setFont);
     const { theme, setTheme } = useTheme();
     const { t } = useLingui();
 
@@ -37,7 +40,13 @@ export default function SettingModal({ visible, onClose }: SettingModalProps) {
             width={480}
             footer={null}
         >
-            <Form labelInline labelRight labelWidth="6em" gap={16} className="pd-12 pb-24" style={{ maxHeight: "60vh", alignContent: "flex-start" }}>
+            <Form
+                labelInline
+                labelRight
+                labelWidth="6em"
+                className="pd-12 pb-24"
+                style={{ maxHeight: "60vh", alignContent: "flex-start" }}
+            >
                 <Radio
                     label={t`主题`}
                     options={["theme-light", "theme-dark", "theme-auto"]}
@@ -48,7 +57,14 @@ export default function SettingModal({ visible, onClose }: SettingModalProps) {
 
                         return (
                             <Flex gap={4} className={checked ? "" : "color-7"}>
-                                <Icon size={20} fill={checked ? "var(--color-7)" : "transparent"} />
+                                <Icon
+                                    size={20}
+                                    fill={
+                                        checked
+                                            ? "var(--color-7)"
+                                            : "transparent"
+                                    }
+                                />
                                 <span>{t(label)}</span>
                             </Flex>
                         );
@@ -60,13 +76,19 @@ export default function SettingModal({ visible, onClose }: SettingModalProps) {
 
                 <Select
                     label={t`语言`}
-                    style={{ width: 200 }}
                     options={[
                         { label: "中文", value: "zh-CN" },
                         { label: "English", value: "en-US" },
                     ]}
                     value={locale}
                     onChange={(val) => setLocale(val)}
+                />
+
+                <Select
+                    label={t`字体`}
+                    options={fonts.map((f) => ({ label: f.key, value: f.key }))}
+                    value={font}
+                    onChange={(val) => setFont(val)}
                 />
             </Form>
         </Modal>

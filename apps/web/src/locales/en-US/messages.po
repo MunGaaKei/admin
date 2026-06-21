@@ -17,10 +17,6 @@ msgstr ""
 msgid "ID"
 msgstr "ID"
 
-#: config/menu.tsx
-#~ msgid "个人资料"
-#~ msgstr "Profile"
-
 #: components/setting-modal/index.tsx
 msgid "主题"
 msgstr "Theme"
@@ -37,6 +33,10 @@ msgstr "Dashboard"
 msgid "任务"
 msgstr "Task"
 
+#: tabs/task/index.tsx
+msgid "优先级"
+msgstr "Priority"
+
 #: components/view/pane-context-menu.tsx
 msgid "关闭其他"
 msgstr "Close Others"
@@ -48,6 +48,10 @@ msgstr "Split Screen"
 #: pages/admin/roles/components/role-form-modal.tsx
 msgid "创建成功"
 msgstr "Created Successfully"
+
+#: tabs/task/index.tsx
+msgid "创建时间"
+msgstr "Created Time"
 
 #: pages/admin/roles/components/permission-field.tsx
 msgid "创建权限失败"
@@ -71,6 +75,10 @@ msgstr "Refresh"
 msgid "可用权限"
 msgstr "Available Permissions"
 
+#: components/setting-modal/index.tsx
+msgid "字体"
+msgstr "Font"
+
 #: pages/admin/user/components/user-form-modal.tsx
 msgid "密码"
 msgstr "Password"
@@ -78,6 +86,10 @@ msgstr "Password"
 #: pages/admin/roles/components/permission-field.tsx
 msgid "当前角色权限"
 msgstr "Current Role Permissions"
+
+#: tabs/task/index.tsx
+msgid "截止日期"
+msgstr "Deadline"
 
 #: pages/admin/roles/components/role-form-modal.tsx
 #: pages/admin/roles/components/role-table.tsx
@@ -90,8 +102,14 @@ msgstr "Search"
 
 #: pages/admin/roles/components/role-table.tsx
 #: pages/admin/user/components/user-table.tsx
+#: tabs/task/index.tsx
 msgid "操作"
 msgstr "Actions"
+
+#: config/menu.tsx
+#: tabs/support/index.tsx
+msgid "支持"
+msgstr "Support"
 
 #: config/menu.tsx
 msgid "文件"
@@ -101,10 +119,6 @@ msgstr "File"
 #: pages/admin/user/components/user-table.tsx
 msgid "昵称"
 msgstr "Nickname"
-
-#: pages/admin/user/+Page.tsx
-#~ msgid "暂无角色"
-#~ msgstr "No Roles"
 
 #: components/setting-modal/index.tsx
 msgid "暗色"
@@ -121,12 +135,20 @@ msgid "权限"
 msgstr "Permissions"
 
 #: pages/admin/roles/components/permission-field.tsx
-#~ msgid "权限列表"
-#~ msgstr "Permission List"
-
-#: pages/admin/roles/components/permission-field.tsx
 msgid "权限管理"
 msgstr "Permission Management"
+
+#: tabs/task/index.tsx
+msgid "查看"
+msgstr "View"
+
+#: tabs/task/index.tsx
+msgid "标签"
+msgstr "Tags"
+
+#: tabs/task/index.tsx
+msgid "标题"
+msgstr "Title"
 
 #: pages/admin/roles/+Page.tsx
 #: pages/admin/user/+Page.tsx
@@ -144,6 +166,10 @@ msgstr "Create User"
 #: pages/admin/roles/components/role-form-modal.tsx
 msgid "添加角色"
 msgstr "Add Role"
+
+#: tabs/task/index.tsx
+msgid "状态"
+msgstr "Status"
 
 #: pages/admin/user/components/user-form-modal.tsx
 #: pages/admin/user/components/user-table.tsx
@@ -167,14 +193,6 @@ msgstr "Are you sure you want to delete this user?"
 #: pages/admin/roles/components/role-table.tsx
 msgid "确定要删除该角色吗？"
 msgstr "Are you sure you want to delete this role?"
-
-#: pages/admin/roles/components/role-table.tsx
-#~ msgid "确认删除"
-#~ msgstr "Confirm Delete"
-
-#: pages/admin/user/+Page.tsx
-#~ msgid "管理"
-#~ msgstr "Manage"
 
 #: pages/admin/roles/components/role-table.tsx
 #: pages/admin/user/components/user-table.tsx
@@ -218,6 +236,18 @@ msgstr "Settings"
 msgid "语言"
 msgstr "Language"
 
+#: tabs/task/index.tsx
+msgid "负责人"
+msgstr "Assignee"
+
 #: components/aside/popup.tsx
 msgid "退出"
 msgstr "Logout"
+
+#: tabs/task/index.tsx
+msgid "项目"
+msgstr "Project"
+
+#: config/menu.tsx
+msgid "首页"
+msgstr "Home"

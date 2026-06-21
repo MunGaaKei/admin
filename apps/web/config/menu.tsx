@@ -1,6 +1,11 @@
 import { ITreeItem } from "@ioca/react/components/tree/type";
 import { msg } from "@lingui/core/macro";
-import { LayoutPanelLeft, ListTodo, ScrollText } from "lucide-react";
+import {
+    BookMarked,
+    LayoutPanelLeft,
+    ListTodo,
+    ScrollText,
+} from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 
 export interface MenuItem extends Omit<ITreeItem, "title"> {
@@ -32,6 +37,12 @@ export const menus: MenuItem[] = [
                 content: () => import("../tabs/task/files/file"),
             },
         ],
+    },
+    {
+        key: "support",
+        title: msg`支持`,
+        icon: <BookMarked size={20} />,
+        content: () => import("../tabs/support"),
     },
 ];
 

@@ -10,9 +10,10 @@
 }
 
 .form {
-    padding: 12px;
+    padding: 20px;
     backdrop-filter: blur(2px);
     border-radius: var(--radius);
+    border: 1px solid var(--background-opacity-2);
 }
 
 .logo {
