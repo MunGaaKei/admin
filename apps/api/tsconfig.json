@@ -1,0 +1,22 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src",
+        "baseUrl": ".",
+        "noImplicitAny": false,
+        "strict": true,
+        "moduleResolution": "Node",
+        "module": "ESNext",
+        "skipLibCheck": true,
+        "noEmit": true,
+        "types": ["node"],
+        "paths": {
+            "#api/*.js": ["./src/*.ts"],
+            "@prisma/client": ["./src/generated/prisma"],
+            "@prisma/client/*": ["./src/generated/prisma/*"]
+        },
+        "ignoreDeprecations": "6.0"
+    },
+    "include": ["src"]
+}

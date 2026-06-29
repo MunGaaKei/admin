@@ -1,0 +1,253 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-06-07 22:52+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-CN\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: pages/admin/user/components/user-table.tsx
+msgid "ID"
+msgstr "ID"
+
+#: components/setting-modal/index.tsx
+msgid "主题"
+msgstr "主题"
+
+#: components/setting-modal/index.tsx
+msgid "亮色"
+msgstr "亮色"
+
+#: config/menu.tsx
+msgid "仪表盘"
+msgstr "仪表盘"
+
+#: config/menu.tsx
+msgid "任务"
+msgstr "任务"
+
+#: tabs/task/index.tsx
+msgid "优先级"
+msgstr "优先级"
+
+#: components/view/pane-context-menu.tsx
+msgid "关闭其他"
+msgstr "关闭其他"
+
+#: components/view/pane-context-menu.tsx
+msgid "分屏"
+msgstr "分屏"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+msgid "创建成功"
+msgstr "创建成功"
+
+#: tabs/task/index.tsx
+msgid "创建时间"
+msgstr "创建时间"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "创建权限失败"
+msgstr "创建权限失败"
+
+#: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
+msgid "删除"
+msgstr "删除"
+
+#: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
+msgid "删除成功"
+msgstr "删除成功"
+
+#: components/view/pane-context-menu.tsx
+msgid "刷新"
+msgstr "刷新"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "可用权限"
+msgstr "可用权限"
+
+#: components/setting-modal/index.tsx
+msgid "字体"
+msgstr "字体"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "密码"
+msgstr "密码"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "当前角色权限"
+msgstr "当前角色权限"
+
+#: tabs/task/index.tsx
+msgid "截止日期"
+msgstr "截止日期"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "描述"
+msgstr "描述"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "搜索"
+msgstr "搜索"
+
+#: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
+#: tabs/task/index.tsx
+msgid "操作"
+msgstr "操作"
+
+#: config/menu.tsx
+#: tabs/support/index.tsx
+msgid "支持"
+msgstr "支持"
+
+#: config/menu.tsx
+msgid "文件"
+msgstr "文件"
+
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
+msgid "昵称"
+msgstr "昵称"
+
+#: components/setting-modal/index.tsx
+msgid "暗色"
+msgstr "暗色"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "更新成功"
+msgstr "更新成功"
+
+#: pages/admin/roles/components/permission-field.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "权限"
+msgstr "权限"
+
+#: pages/admin/roles/components/permission-field.tsx
+msgid "权限管理"
+msgstr "权限管理"
+
+#: tabs/task/index.tsx
+msgid "查看"
+msgstr "查看"
+
+#: tabs/task/index.tsx
+msgid "标签"
+msgstr "标签"
+
+#: tabs/task/index.tsx
+msgid "标题"
+msgstr "标题"
+
+#: pages/admin/roles/+Page.tsx
+#: pages/admin/user/+Page.tsx
+msgid "添加"
+msgstr "添加"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "添加成功"
+msgstr "添加成功"
+
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "添加用户"
+msgstr "添加用户"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+msgid "添加角色"
+msgstr "添加角色"
+
+#: tabs/task/index.tsx
+msgid "状态"
+msgstr "状态"
+
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
+msgid "用户名"
+msgstr "用户名"
+
+#: config/menu.tsx
+#: pages/admin/user/+Page.tsx
+#: pages/admin/user/components/user-form-modal.tsx
+msgid "用户管理"
+msgstr "用户管理"
+
+#: pages/login/+Page.tsx
+msgid "登陆"
+msgstr "登陆"
+
+#: pages/admin/user/components/user-table.tsx
+msgid "确定要删除该用户吗？"
+msgstr "确定要删除该用户吗？"
+
+#: pages/admin/roles/components/role-table.tsx
+msgid "确定要删除该角色吗？"
+msgstr "确定要删除该角色吗？"
+
+#: pages/admin/roles/components/role-table.tsx
+#: pages/admin/user/components/user-table.tsx
+msgid "编辑"
+msgstr "编辑"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+msgid "编辑角色"
+msgstr "编辑角色"
+
+#: components/setting-modal/index.tsx
+msgid "自动"
+msgstr "自动"
+
+#: pages/admin/user/components/user-form-modal.tsx
+#: pages/admin/user/components/user-table.tsx
+msgid "角色"
+msgstr "角色"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "角色代码"
+msgstr "角色代码"
+
+#: pages/admin/roles/components/role-form-modal.tsx
+#: pages/admin/roles/components/role-table.tsx
+msgid "角色名称"
+msgstr "角色名称"
+
+#: config/menu.tsx
+#: pages/admin/roles/+Page.tsx
+msgid "角色管理"
+msgstr "角色管理"
+
+#: components/aside/popup.tsx
+#: components/setting-modal/index.tsx
+msgid "设置"
+msgstr "设置"
+
+#: components/setting-modal/index.tsx
+msgid "语言"
+msgstr "语言"
+
+#: tabs/task/index.tsx
+msgid "负责人"
+msgstr "负责人"
+
+#: components/aside/popup.tsx
+msgid "退出"
+msgstr "退出"
+
+#: tabs/task/index.tsx
+msgid "项目"
+msgstr "项目"
+
+#: config/menu.tsx
+msgid "首页"
+msgstr "首页"

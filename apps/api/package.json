@@ -1,0 +1,32 @@
+{
+    "name": "@admin/api",
+    "private": true,
+    "type": "module",
+    "packageManager": "pnpm@10.20.0",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "postinstall": "prisma generate",
+        "build": "prisma generate && DATABASE_URL=file:./prisma/dev.db prisma db push && DATABASE_URL=file:./prisma/dev.db prisma db seed",
+        "vercel-build": "prisma generate && DATABASE_URL=file:./prisma/dev.db prisma db push && DATABASE_URL=file:./prisma/dev.db prisma db seed",
+        "prisma:generate": "prisma generate",
+        "db:push": "prisma db push",
+        "db:seed": "prisma db seed"
+    },
+    "imports": {
+        "#api/*.js": "./src/*.ts"
+    },
+    "dependencies": {
+        "@hono/node-server": "^2.0.4",
+        "@libsql/client": "^0.17.4",
+        "@prisma/adapter-better-sqlite3": "^7.8.0",
+        "@prisma/adapter-libsql": "^7.8.0",
+        "@prisma/client": "^7.8.0",
+        "better-sqlite3": "^12.11.1",
+        "hono": "^4.12.27"
+    },
+    "devDependencies": {
+        "@types/node": "^25.9.1",
+        "prisma": "^7.8.0",
+        "tsx": "^4.22.4"
+    }
+}

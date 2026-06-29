@@ -1,0 +1,7 @@
+.footer {
+    border-top: 1px solid var(--color-9);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

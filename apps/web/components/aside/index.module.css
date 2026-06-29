@@ -1,0 +1,154 @@
+.aside {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    border-right: 1px solid var(--color-9);
+    flex-shrink: 0;
+    transition: all 0.12s ease;
+}
+
+.collapsed {
+    align-items: center;
+    width: 60px;
+    gap: 12px;
+    .header,
+    .footer,
+    .user {
+        flex-direction: column;
+    }
+
+    .menuContainer {
+        background: var(--background-opacity-1);
+    }
+
+    .menu {
+        width: 240px;
+        background: var(--background);
+        border: 1px solid var(--color-9);
+        border-radius: var(--radius);
+
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(-8px);
+
+        &:hover {
+            opacity: 1;
+            pointer-events: all;
+            transform: none;
+        }
+    }
+    :global(.i-tree) {
+        padding: 0 12px;
+        flex-shrink: 0;
+    }
+    .hide {
+        display: none;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.logo {
+    margin: 0;
+    display: flex;
+    width: 24px;
+    height: 24px;
+}
+
+.menuContainer {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    border-radius: var(--radius);
+
+    &:hover {
+        .menu {
+            opacity: 1;
+            pointer-events: all;
+            transform: none;
+        }
+    }
+}
+
+.menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: auto;
+    max-height: 100%;
+    transition: all 0.12s;
+
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 8px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &::before,
+    &::after {
+        content: "\20";
+        position: sticky;
+        height: 12px;
+        width: 100%;
+        flex-shrink: 0;
+        z-index: 11;
+        pointer-events: none;
+    }
+
+    &::before {
+        margin-bottom: -8px;
+        top: 0;
+        background: linear-gradient(to bottom, var(--background), transparent);
+    }
+
+    &::after {
+        margin-top: auto;
+        bottom: 0;
+        background: linear-gradient(to top, var(--background), transparent);
+    }
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+    max-width: 100%;
+    flex: 1;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius);
+    background-color: var(--color-9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.nickname {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
